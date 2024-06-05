@@ -28,7 +28,7 @@ Once you have created a database and have configured the code with your access t
 
 ### GitHub
 
-The following scripts are provided:
+The following scripts are provided to fetch and store information from GitHub:
 
 #### Bash
 
@@ -80,7 +80,7 @@ This script is used to fetch and store information in the database about users r
 
 ### GitLab
 
-The following scripts are provided:
+The following scripts are provided to fetch and store information from GitLab:
 
 #### Bash
 
