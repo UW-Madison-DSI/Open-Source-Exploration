@@ -139,7 +139,7 @@ Below are some sample findings from GitHub about respositories related to "Wisco
 
 ### Percentages of repositories with multiple essential components
 
-| Description | README | Images | License | Homepage | Count | Percent |
+| Description | README | Illustrated README | License | Homepage | Count | Percent |
 | --- | --- | --- | --- | --- | --- | --- |
 | &check; | &check; |     |     |     | 1111 | 37% |
 | &check; | &check; | &check; |     |     | 149 | 5% |
