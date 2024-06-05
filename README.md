@@ -122,48 +122,31 @@ data/
 
 Below are some sample findings from GitHub about respositories related to "Wisconsin":
 
-- number of repositories:
-3028
-
-- number that are not part of the Wisconsin breast Cancer dataset or CS Class repositories:
-1748 = 58%
+| Description | Count | Percent |
+| --- | --- | --- |
+| All repositories | 3028 | 100% |
+| Repositories that are not part of the Wisconsin breast Cancer dataset or CS classes | 1748 | 58% |
 
 ### Percentages of repositories with essential components
 
-- number of repositories with a description:
-2433 = 80%
-
-- number of repositories with a README:
-2185 = 72%
-
-- number of repositories with an illustrated README:
-256 = 8%
-
-- number of repositories with a homepage:
-151 = 5%
-
-- number of repositories with a license:
-436 = 14%
+| Component | Count | Percent |
+| --- | --- | --- |
+| Description | 2433 | 80% |
+| README | 2185 | 72% |
+| Illustrated README | 256 | 8% |
+| Homepage | 151 | 5% |
+| License | 436 | 14% |
 
 ### Percentages of repositories with multiple essential components
 
-- number that have a description and a README:
-1111 = 37%
-
-- number that have a description, and an illustrated README:
-149 = 5%
-
-- number that have a description, a README and a homepage:
-84 = 3%
-
-- number that have a description, an illustrated README, and a license:
-59 = 1.5%
-
-- number that have a description, an illustrated README and a homepage:
-31 = 1%
-
-- number that have a description, an illustrated README, a homepage, and a license:
-17 = 0.5%
+| Description | README | Images | License | Homepage | Count | Percent |
+| --- | --- | --- | --- | --- | --- | --- |
+| &check; | &check; |     |     |     | 1111 | 37% |
+| &check; | &check; | &check; |     |     | 149 | 5% |
+| &check; | &check; |     |     | &check; | 84 | 3% |
+| &check; | &check; | &check; | &check; |     | 59 | 1.5% |
+| &check; | &check; | &check; |     | &check; | 31 | 1% |
+| &check; | &check; | &check; | &check; | &check; | 17 | 0.5% |
 
 <!-- LICENSE -->
 ## License
