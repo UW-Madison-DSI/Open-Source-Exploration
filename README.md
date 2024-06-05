@@ -20,7 +20,11 @@ To run the code in this project, you will need the following:
 
 ## Installation
 
-Before running the scripts in this project, you will need to configure the database and access tokens, as described [here](INSTALL.md).
+Before running the scripts in this project, you will need to create a database to store the data as described [here](INSTALL.md).
+
+## Configuration
+
+Before running the scripts in this project, you will need to configure your code to use GitHub / GitLab access tokens [here](CONFIGURE.md).
 
 ## Running
 
