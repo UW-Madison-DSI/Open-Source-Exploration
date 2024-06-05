@@ -34,7 +34,6 @@ The following scripts are provided:
 
 The following Bash scripts are provided ini the directory 'src/github/bash' to download data in json format.  These script do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
-
 - fetch_dsi_repositories.sh
 
 This script is used to fetch information about repositories owned by the Data Science Institute.
@@ -49,6 +48,8 @@ This script is used to fetch information about users related to "wisc.edu".
 
 #### Python
 
+The following Python scripts are provided ini the directory 'src/github/python' to download and store data in the database. 
+
 - fetch_dsi_repositories.py
 
 This script is used to fetch and store information in the database about repositories owned by the Data Science Institute.
@@ -62,6 +63,8 @@ This script is used to fetch and store information in the database about all rep
 This script is used to fetch and store information in the database about a single repository.
 
 #### PHP
+
+The following PHP scripts are provided ini the directory 'src/github/php' to download and store data in the database. 
 
 - fetch_dsi_repositories.php
 
@@ -96,6 +99,8 @@ This script is used to fetch information about a single project.
 This script is used to fetch information about all UW projects.
 
 #### Python
+
+The following Python scripts are provided ini the directory 'src/gitlab/python' to download and store data in the database. 
 
 - fetch_project.py
 
