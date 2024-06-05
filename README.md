@@ -133,13 +133,13 @@ Below are some sample findings from GitHub about respositories related to "Wisco
 | --- | --- | --- |
 | Description | 2433 | 80% |
 | README | 2185 | 72% |
-| Illustrated README | 256 | 8% |
+| README Images | 256 | 8% |
 | Homepage | 151 | 5% |
 | License | 436 | 14% |
 
 ### Percentages of repositories with multiple essential components
 
-| Description | README | Illustrated README | License | Homepage | Count | Percent |
+| Description | README | README Images | License | Homepage | Count | Percent |
 | --- | --- | --- | --- | --- | --- | --- |
 | &check; | &check; |     |     |     | 1111 | 37% |
 | &check; | &check; | &check; |     |     | 149 | 5% |
