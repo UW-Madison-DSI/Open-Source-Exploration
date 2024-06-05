@@ -45,11 +45,11 @@ src/
     └── sql/
 </pre>
 
-### <img width="20px" src="./images/logos/github-logo.svg" style="float:left; margin-right:10px" />GitHub
+### <img width="20px" src="./images/logos/github-logo.svg" style="float:left; margin-right:10px" /> GitHub
 
 The following scripts are provided to fetch and store information from GitHub:
 
-#### <img width="20px" src="./images/logos/bash-logo.svg" style="float:left; margin-right:10px" />Bash
+#### <img width="20px" src="./images/logos/bash-logo.svg" style="float:left; margin-right:10px" /> Bash
 
 The following Bash scripts are provided in the directory 'src/github/bash' to download data from GitHub in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
@@ -65,7 +65,7 @@ This script is used to fetch information about repositories related to the keywo
 
 This script is used to fetch information about users related to "wisc.edu".
 
-#### <img width="20" src="./images/logos/python-logo.svg" style="float:left; margin-right:10px" />Python
+#### <img width="20" src="./images/logos/python-logo.svg" style="float:left; margin-right:10px" /> Python
 
 The following Python scripts are provided in the directory 'src/github/python' to download and store data from GitHub in the database. 
 
