@@ -30,6 +30,21 @@ Before running the scripts in this project, you will need to configure your code
 
 Once you have created a database and have configured the code with your access tokens, you are ready to run the scripts. 
 
+<pre>
+src/
+│
+├── github/
+│   ├── bash/
+│   ├── php/
+│   ├── python/
+│   └── sql/
+│ 
+└── gitlab/
+    ├── bash/
+    ├── python/
+    └── sql/
+</pre>
+
 ### GitHub
 
 The following scripts are provided to fetch and store information from GitHub:
