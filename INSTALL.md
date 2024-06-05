@@ -1,10 +1,3 @@
-<p align="center">
-	<div align="center">
-        <img src="./images/logos/uw-crest.png" alt="University of Wisconsin Logo" style="width:20%">
-		<img src="./images/logos/open-source.svg" alt="Open Source Logo" style="width:33%">
-	</div>
-</p>
-
 # Installation
 
 ## Database
