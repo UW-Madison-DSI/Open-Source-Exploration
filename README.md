@@ -116,6 +116,22 @@ This script is used to fetch and store information in the database about all UW 
 
 ## Sample Results
 
+Results data in a variety of formats are contained in the following directories:
+
+<pre>
+data/
+│
+├── github/
+│   ├── csv/
+│   ├── json/
+│   └── sql/
+│ 
+└── gitlab/
+    ├── csv/
+    ├── json/
+    └── sql/
+</pre>
+
 Below are some sample findings from GitHub about respositories related to "Wisconsin":
 
 - number of repositories:
