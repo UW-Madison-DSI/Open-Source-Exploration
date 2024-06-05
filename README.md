@@ -24,7 +24,7 @@ Before running the scripts in this project, you will need to create a database t
 
 ## Configuration
 
-Before running the scripts in this project, you will need to configure your code to use GitHub / GitLab access tokens [here](CONFIGURE.md).
+Before running the scripts in this project, you will need to configure your code to use GitHub / GitLab access tokens as described [here](CONFIGURE.md).
 
 ## Running
 
