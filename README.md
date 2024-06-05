@@ -28,7 +28,7 @@ Before running the scripts in this project, you will need to configure your code
 
 ## Running
 
-Once you have created a database and have configured the code with your access tokens, you are ready to run the scripts.  The following scripts are provided:
+Once you have created a database and have configured the code with your access tokens, you are ready to run the scripts. 
 
 ### GitHub
 
@@ -36,7 +36,7 @@ The following scripts are provided to fetch and store information from GitHub:
 
 #### Bash
 
-The following Bash scripts are provided ini the directory 'src/github/bash' to download data in json format.  These script do not store the data in the database but are provided in order to show the structure of the json that is returned.
+The following Bash scripts are provided ini the directory 'src/github/bash' to download data from GitHub in json format.  These script do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
 - fetch_dsi_repositories.sh
 
@@ -52,7 +52,7 @@ This script is used to fetch information about users related to "wisc.edu".
 
 #### Python
 
-The following Python scripts are provided ini the directory 'src/github/python' to download and store data in the database. 
+The following Python scripts are provided ini the directory 'src/github/python' to download and store data from GitHub in the database. 
 
 - fetch_dsi_repositories.py
 
@@ -68,7 +68,7 @@ This script is used to fetch and store information in the database about a singl
 
 #### PHP
 
-The following PHP scripts are provided ini the directory 'src/github/php' to download and store data in the database. 
+The following PHP scripts are provided ini the directory 'src/github/php' to download and store data from GitHub in the database. 
 
 - fetch_dsi_repositories.php
 
@@ -88,7 +88,7 @@ The following scripts are provided to fetch and store information from GitLab:
 
 #### Bash
 
-The following Bash scripts are provided ini the directory 'src/gitlab/bash' to download data in json format.  These script do not store the data in the database but are provided in order to show the structure of the json that is returned.
+The following Bash scripts are provided ini the directory 'src/gitlab/bash' to download data from GitLab in json format.  These script do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
 - fetch_my_projects.sh
 
@@ -104,7 +104,7 @@ This script is used to fetch information about all UW projects.
 
 #### Python
 
-The following Python scripts are provided ini the directory 'src/gitlab/python' to download and store data in the database. 
+The following Python scripts are provided ini the directory 'src/gitlab/python' to download and store data from GitLab in the database. 
 
 - fetch_project.py
 
