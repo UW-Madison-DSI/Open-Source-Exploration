@@ -112,7 +112,7 @@ This script is used to fetch and store information in the database about all UW 
 
 ## Sample Results
 
-Below are some sample findings from GitHub
+Below are some sample findings from GitHub about respositories related to "Wisconsin":
 
 - number of repositories:
 3028
