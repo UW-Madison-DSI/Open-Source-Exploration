@@ -49,7 +49,7 @@ src/
 
 The following scripts are provided to fetch and store information from GitHub:
 
-#### Bash
+#### <img width="20px" src="./images/logos/bash-logo.svg" style="float:left; margin-right:10px" />Bash
 
 The following Bash scripts are provided in the directory 'src/github/bash' to download data from GitHub in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
@@ -65,7 +65,7 @@ This script is used to fetch information about repositories related to the keywo
 
 This script is used to fetch information about users related to "wisc.edu".
 
-#### Python
+#### <img width="20" src="./images/logos/python-logo.svg" style="float:left; margin-right:10px" />Python
 
 The following Python scripts are provided in the directory 'src/github/python' to download and store data from GitHub in the database. 
 
@@ -81,7 +81,7 @@ This script is used to fetch and store information in the database about all rep
 
 This script is used to fetch and store information in the database about a single repository.
 
-#### PHP
+#### <img width="30px" src="./images/logos/php-logo.svg" style="float:left; margin-right:10px" />PHP
 
 The following PHP scripts are provided in the directory 'src/github/php' to download and store data from GitHub in the database. 
 
@@ -101,7 +101,7 @@ This script is used to fetch and store information in the database about users r
 
 The following scripts are provided to fetch and store information from GitLab:
 
-#### Bash
+#### <img width="20px" src="./images/logos/bash-logo.svg" style="float:left; margin-right:10px" />Bash
 
 The following Bash scripts are provided in the directory 'src/gitlab/bash' to download data from GitLab in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
@@ -117,7 +117,7 @@ This script is used to fetch information about a single project.
 
 This script is used to fetch information about all UW projects.
 
-#### Python
+#### <img width="20" src="./images/logos/python-logo.svg" style="float:left; margin-right:10px" />Python
 
 The following Python scripts are provided in the directory 'src/gitlab/python' to download and store data from GitLab in the database. 
 
