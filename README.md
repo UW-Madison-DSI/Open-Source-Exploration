@@ -51,7 +51,7 @@ The following scripts are provided to fetch and store information from GitHub:
 
 #### Bash
 
-The following Bash scripts are provided ini the directory 'src/github/bash' to download data from GitHub in json format.  These script do not store the data in the database but are provided in order to show the structure of the json that is returned.
+The following Bash scripts are provided ini the directory 'src/github/bash' to download data from GitHub in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
 - fetch_dsi_repositories.sh
 
@@ -103,7 +103,7 @@ The following scripts are provided to fetch and store information from GitLab:
 
 #### Bash
 
-The following Bash scripts are provided ini the directory 'src/gitlab/bash' to download data from GitLab in json format.  These script do not store the data in the database but are provided in order to show the structure of the json that is returned.
+The following Bash scripts are provided ini the directory 'src/gitlab/bash' to download data from GitLab in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
 - fetch_my_projects.sh
 
