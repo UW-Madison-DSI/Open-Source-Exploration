@@ -19,79 +19,8 @@ To run the code in this project, you will need the following:
 - Python3 or PHP
 
 ## Installation
-First, you will need to create databases to store the data.
 
-### GitHub Database Installation
-
-1. Create GitHub database
-
-Create a database called "github" using your database editor or the command line.
-
-2. Initialize GitHub database structure
-
-Run the sql code contained in following sql files to create the database structure:
-
-In the directory "src/github/sql":
-- repositories.sql
-- users.sql
-
-### GitLab Database Installation
-
-1. Create GitLab database
-
-Create a database called "gitlab" using your database editor or the command line.
-
-2. Initialize GitLab database structure
-
-Run the sql code contained in following sql file to create the database structure:
-
-- src/github/sql/projects.sql
-
-## Configuration
-
-To run the code in this project, you will need a GitHub and/or GitLab personal access token.  See these resources for details on how to obtain these tokens:
-
-- GitHub
-https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-
-- GitLab
-https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html
-
-Once you have your access tokens, you will need to add them to the code:
-
-### GitHub Configuration
-Replace the placeholder "YOURGITHUBTOKENHERE" in the following files:
-
-#### Bash
-In the directory "src/github/bash":
-- fetch_dsi_repositories.sh
-- fetch_repositories.sh
-- fetch_dsi_users.sh
-
-#### Python
-In the directory "src/github/python":
-- models/github.py
-
-#### PHP
-In the directory "src/github/php":
-- models/github.php
-
-### GitLab Configuration
-Replace the placeholder "YOURGITLABTOKENHERE" in the following files:
-
-#### Bash
-In the directory "src/gitlab/bash":
-- fetch_my_projects.sh
-- fetch_project.sh
-- fetch_projects.sh
-
-#### Python
-In the directory "src/gitlab/python":
-- models/gitlab.py
-
-#### PHP
-In the directory "src/gitlab/php":
-- models/gitlab.php
+Before running the scripts in this project, you will need to configure the database and access tokens, as described [here](INSTALL.md).
 
 ## Running
 
@@ -175,6 +104,53 @@ This script is used to fetch and store information in the database about a singl
 - fetch_projects.py
 
 This script is used to fetch and store information in the database about all UW projects.
+
+## Sample Results
+
+Below are some sample findings from GitHub
+
+- number of repositories:
+3028
+
+- number that are not part of the Wisconsin breast Cancer dataset or CS Class repositories:
+1748 = 58%
+
+### Percentages of repositories with essential components
+
+- number of repositories with a description:
+2433 = 80%
+
+- number of repositories with a README:
+2185 = 72%
+
+- number of repositories with an illustrated README:
+256 = 8%
+
+- number of repositories with a homepage:
+151 = 5%
+
+- number of repositories with a license:
+436 = 14%
+
+### Percentages of repositories with multiple essential components
+
+- number that have a description and a README:
+1111 = 37%
+
+- number that have a description, and an illustrated README:
+149 = 5%
+
+- number that have a description, a README and a homepage:
+84 = 3%
+
+- number that have a description, an illustrated README, and a license:
+59 = 1.5%
+
+- number that have a description, an illustrated README and a homepage:
+31 = 1%
+
+- number that have a description, an illustrated README, a homepage, and a license:
+17 = 0.5%
 
 <!-- LICENSE -->
 ## License
