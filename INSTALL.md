@@ -31,15 +31,20 @@ Run the sql code contained in following sql file to create the database structur
 
 ## Configuration
 
-To run the code in this project, you will need a GitHub and/or GitLab personal access token.  See these resources for details on how to obtain these tokens:
+To run the code in this project, you will need to first obtain GitHub and/or GitLab personal access tokens and then you will need to configure your code to use them.
+
+### Obtain Access Tokens
+See these resources for details on how to obtain these tokens:
 
 - GitHub
+
 https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
 
 - GitLab
+
 https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html
 
-Once you have your access tokens, you will need to add them to the code:
+Once you have your access tokens, you will need to add them to your code.
 
 ### GitHub Configuration
 Replace the placeholder "YOURGITHUBTOKENHERE" in the following files:
