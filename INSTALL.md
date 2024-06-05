@@ -3,7 +3,7 @@
 ## Database
 First, you will need to create databases to store the data.
 
-### GitHub Database
+### <img width="20px" src="./images/logos/github-logo.svg" /> GitHub Database
 
 1. Create GitHub database
 
@@ -17,7 +17,7 @@ In the directory "src/github/sql":
 - repositories.sql
 - users.sql
 
-### GitLab Database
+### <img width="20px" src="./images/logos/gitlab-logo.svg"> GitLab Database
 
 1. Create GitLab database
 
