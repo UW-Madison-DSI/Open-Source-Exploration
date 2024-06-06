@@ -51,7 +51,7 @@ The following scripts are provided to fetch and store information from GitHub:
 
 #### <img width="20px" src="./images/logos/bash-logo.svg" style="float:left; margin-right:10px" /> Bash
 
-The following Bash scripts are provided in the directory 'src/github/bash' to download data from GitHub in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
+The following [Bash scripts](./src/github/bash) are provided to download data from GitHub in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
 | File | Description |
 | --- | --- |
@@ -61,7 +61,7 @@ The following Bash scripts are provided in the directory 'src/github/bash' to do
 
 #### <img width="20" src="./images/logos/python-logo.svg" style="float:left; margin-right:10px" /> Python
 
-The following Python scripts are provided in the directory 'src/github/python' to download and store data from GitHub in the database. 
+The following [Python scripts](./src/github/python) are provided to download and store data from GitHub in the database. 
 
 | File | Description |
 | --- | --- |
@@ -71,7 +71,7 @@ The following Python scripts are provided in the directory 'src/github/python' t
 
 #### <img width="30px" src="./images/logos/php-logo.svg" style="float:left; margin-right:10px" /> PHP
 
-The following PHP scripts are provided in the directory 'src/github/php' to download and store data from GitHub in the database. 
+The following [PHP scripts](./src/github/php) are provided to download and store data from GitHub in the database. 
 
 | File | Description |
 | --- | --- |
@@ -85,7 +85,7 @@ The following scripts are provided to fetch and store information from GitLab:
 
 #### <img width="20px" src="./images/logos/bash-logo.svg" /> Bash
 
-The following Bash scripts are provided in the directory 'src/gitlab/bash' to download data from GitLab in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
+The following [Bash scripts](./src/gitlab/bash) are provided to download data from GitLab in json format.  These scripts do not store the data in the database but are provided in order to show the structure of the json that is returned.
 
 | File | Description |
 | --- | --- |
@@ -95,7 +95,7 @@ The following Bash scripts are provided in the directory 'src/gitlab/bash' to do
 
 #### <img width="20" src="./images/logos/python-logo.svg" /> Python
 
-The following Python scripts are provided in the directory 'src/gitlab/python' to download and store data from GitLab in the database. 
+The following [Python scripts](./src/gitlab/python) are provided to download and store data from GitLab in the database. 
 
 | File | Description |
 | --- | --- |
