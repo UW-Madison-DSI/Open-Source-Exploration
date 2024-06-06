@@ -11,6 +11,52 @@ This project is means of exploring open source activity associated with universi
 
 The project contains scripts for downloading information from GitHub and GitLab about open source projects and people and storing this information in a database for further analysis.
 
+## Data
+
+Results data in a variety of formats are contained in the following directories:
+
+<pre>
+data/
+│
+├── github/
+│   ├── csv/
+│   ├── json/
+│   └── sql/
+│ 
+└── gitlab/
+    ├── csv/
+    ├── json/
+    └── sql/
+</pre>
+
+Below are some sample findings from GitHub about respositories related to "Wisconsin":
+
+| Description | Count | Percent |
+| --- | --- | --- |
+| All repositories | 3028 | 100% |
+| Repositories that are not part of the Wisconsin breast Cancer dataset or CS classes | 1748 | 58% |
+
+### Percentages of repositories with essential components
+
+| Component | Count | Percent |
+| --- | --- | --- |
+| Description | 2433 | 80% |
+| README | 2185 | 72% |
+| README Images | 256 | 8% |
+| Homepage | 151 | 5% |
+| License | 436 | 14% |
+
+### Percentages of repositories with multiple essential components
+
+| Description | README | README Images | License | Homepage | Count | Percent |
+| --- | --- | --- | --- | --- | --- | --- |
+| &check; | &check; |     |     |     | 1111 | 37% |
+| &check; | &check; | &check; |     |     | 149 | 5% |
+| &check; | &check; |     |     | &check; | 84 | 3% |
+| &check; | &check; | &check; | &check; |     | 59 | 1.5% |
+| &check; | &check; | &check; |     | &check; | 31 | 1% |
+| &check; | &check; | &check; | &check; | &check; | 17 | 0.5% |
+
 ## Requirements
 
 To run the code in this project, you will need the following:
@@ -101,52 +147,6 @@ The following [Python scripts](./src/gitlab/python) are provided to download and
 | --- | --- |
 | [fetch_project.py](./src/gitlab/python/fetch_project.py) | This script is used to fetch and store information in the database about a single project. |
 | [fetch_projects.py](./src/gitlab/python/fetch_projects.py) | This script is used to fetch and store information in the database about all UW projects. |
-
-## Sample Results
-
-Results data in a variety of formats are contained in the following directories:
-
-<pre>
-data/
-│
-├── github/
-│   ├── csv/
-│   ├── json/
-│   └── sql/
-│ 
-└── gitlab/
-    ├── csv/
-    ├── json/
-    └── sql/
-</pre>
-
-Below are some sample findings from GitHub about respositories related to "Wisconsin":
-
-| Description | Count | Percent |
-| --- | --- | --- |
-| All repositories | 3028 | 100% |
-| Repositories that are not part of the Wisconsin breast Cancer dataset or CS classes | 1748 | 58% |
-
-### Percentages of repositories with essential components
-
-| Component | Count | Percent |
-| --- | --- | --- |
-| Description | 2433 | 80% |
-| README | 2185 | 72% |
-| README Images | 256 | 8% |
-| Homepage | 151 | 5% |
-| License | 436 | 14% |
-
-### Percentages of repositories with multiple essential components
-
-| Description | README | README Images | License | Homepage | Count | Percent |
-| --- | --- | --- | --- | --- | --- | --- |
-| &check; | &check; |     |     |     | 1111 | 37% |
-| &check; | &check; | &check; |     |     | 149 | 5% |
-| &check; | &check; |     |     | &check; | 84 | 3% |
-| &check; | &check; | &check; | &check; |     | 59 | 1.5% |
-| &check; | &check; | &check; |     | &check; | 31 | 1% |
-| &check; | &check; | &check; | &check; | &check; | 17 | 0.5% |
 
 <!-- LICENSE -->
 ## License
