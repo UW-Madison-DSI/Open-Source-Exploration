@@ -36,7 +36,7 @@ Below are some sample findings from GitHub about respositories related to "Wisco
 | All repositories | 3028 | 100% |
 | Repositories that are not part of the Wisconsin breast Cancer dataset or CS classes | 1748 | 58% |
 
-### Percentages of repositories with essential components
+### Repositories containing essential components
 
 | Component | Count | Percent |
 | --- | --- | --- |
@@ -46,7 +46,7 @@ Below are some sample findings from GitHub about respositories related to "Wisco
 | Homepage | 151 | 5% |
 | License | 436 | 14% |
 
-### Percentages of repositories with multiple essential components
+### Repositories containing multiple essential components
 
 | Description | README | README Images | License | Homepage | Count | Percent |
 | --- | --- | --- | --- | --- | --- | --- |
