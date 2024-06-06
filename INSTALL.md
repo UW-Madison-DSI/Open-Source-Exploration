@@ -13,8 +13,8 @@ Create a database called "github" using your database editor or the command line
 
 Run the sql code contained in following [sql files](./src/github/sql) to create the database structure:
 
-- repositories.sql
-- users.sql
+- [repositories.sql](./src/github/sql/repositories.sql)
+- [users.sql](./src/github/sql/users.sql)
 
 ### <img width="20px" src="./images/logos/gitlab-logo.svg"> GitLab Database
 
@@ -26,4 +26,4 @@ Create a database called "gitlab" using your database editor or the command line
 
 Run the sql code contained in following [sql file](src/gitlab/sql) to create the database structure:
 
-- projects.sql
+- [projects.sql](./src/gitlab/sql/projects.sql)
