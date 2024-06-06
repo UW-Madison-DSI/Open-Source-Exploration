@@ -11,9 +11,8 @@ Create a database called "github" using your database editor or the command line
 
 2. Initialize GitHub database structure
 
-Run the sql code contained in following sql files to create the database structure:
+Run the sql code contained in following [sql files](./src/github/sql) to create the database structure:
 
-In the directory "src/github/sql":
 - repositories.sql
 - users.sql
 
@@ -25,6 +24,6 @@ Create a database called "gitlab" using your database editor or the command line
 
 2. Initialize GitLab database structure
 
-Run the sql code contained in following sql file to create the database structure:
+Run the sql code contained in following [sql file](src/gitlab/sql) to create the database structure:
 
-- src/github/sql/projects.sql
+- projects.sql
