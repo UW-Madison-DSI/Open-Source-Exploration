@@ -15,8 +15,8 @@
 #  Copyright (C) 2024 Data Science Institute, Univeristy of Wisconsin-Madison  #
 ################################################################################
 
-from models.repository import Repository
 import mysql.connector
+from models.repository import Repository
 
 #
 # main
@@ -32,8 +32,8 @@ try:
 		password = "root",
 		database = "github"
 	)
-except:
-	print("No database found.")
+except Exception as e:
+	print("Could not connect to database.")
 	exit()
 
 # fetch repository
@@ -44,7 +44,7 @@ repository = Repository({
 
 # store repository
 #
-if (repository.exists(db, table = "dsi_repositories")):
+if repository.exists(db, table = "dsi_repositories"):
 	repository.delete(db, table = "dsi_repositories")
 repository.store(db, table = "dsi_repositories")
 

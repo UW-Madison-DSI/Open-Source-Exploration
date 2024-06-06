@@ -15,14 +15,14 @@
 #  Copyright (C) 2024 Data Science Institute, Univeristy of Wisconsin-Madison  #
 ################################################################################
 
-from models.project import Project 
 import mysql.connector
+from models.project import Project
 
 #
 # globals
 #
 
-table = 'projects';
+TABLE = 'projects'
 
 #
 # main
@@ -37,10 +37,10 @@ try:
 		password = "root",
 		database = "gitlab"
 	)
-except:
-	print("No database found.")
+except Exception as e:
+	print("Could not connect to database.")
 	exit()
 
 # fetch and store project
 #
-Project.fetch_by_id(db, table, 13771)
+Project.fetch_by_id(db, TABLE, 13771)

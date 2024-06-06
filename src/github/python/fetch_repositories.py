@@ -16,15 +16,15 @@
 #  Copyright (C) 2024 Data Science Institute, Univeristy of Wisconsin-Madison  #
 ################################################################################
 
-from models.repository import Repository 
 import mysql.connector
+from models.repository import Repository
 
 #
 # globals
 #
 
-query = 'Wisconsin';
-table = 'wisconsin_repositories';
+TABLE = 'wisconsin_repositories'
+QUERY = 'Wisconsin'
 
 #
 # main
@@ -39,10 +39,10 @@ try:
 		password = "root",
 		database = "github"
 	)
-except:
-	print("No database found.")
+except Exception as e:
+	print("Could not connect to database.")
 	exit()
 
 # fetch and store repositories since year according to search query
 #
-Repository.find_since(db, table, query, 2000)
+Repository.find_since(db, TABLE, QUERY, 2000)

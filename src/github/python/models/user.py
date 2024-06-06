@@ -31,7 +31,7 @@ class User(Model):
 	# querying methods
 	#
 
-	def url() {
+	def url():
 
 		"""
 		Gets the url for this user.
@@ -40,7 +40,7 @@ class User(Model):
 			string
 		"""
 
-		return self.base_url + '/' + this.get('id');
+		return self.base_url + '/' + this.get('id')
 
 	#
 	# conversion methods
@@ -55,7 +55,7 @@ class User(Model):
 			array
 		"""
 
-		return [
+		return {
 			'id': this.get('id'),
 
 			# name attributes
@@ -71,4 +71,4 @@ class User(Model):
 			#
 			'type': this.get('type'),
 			'score': this.get('score')
-		]
+		}

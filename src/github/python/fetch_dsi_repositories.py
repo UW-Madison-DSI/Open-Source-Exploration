@@ -16,15 +16,15 @@
 #  Copyright (C) 2024 Data Science Institute, Univeristy of Wisconsin-Madison  #
 ################################################################################
 
-from models.repository import Repository 
 import mysql.connector
+from models.repository import Repository
 
 #
 # globals
 #
 
-query = 'org:UW-Madison-DSI';
-table = 'dsi_repositories';
+TABLE = 'dsi_repositories'
+QUERY = 'org:UW-Madison-DSI'
 
 #
 # main
@@ -39,10 +39,10 @@ try:
 		password = "root",
 		database = "github"
 	)
-except:
-	print("No database found.")
+except Exception as e:
+	print("Could not connect to database.")
 	exit()
 
 # fetch and store repositories according to search query
 #
-Repository.find_all(db, table, query)
+Repository.find_all(db, TABLE, QUERY)
