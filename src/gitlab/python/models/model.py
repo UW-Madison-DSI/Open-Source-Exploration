@@ -125,10 +125,7 @@ class Model:
 			Model
 		"""
 
-		print("IN FETCH")
-
 		request = requests.get(self.url())
-		print("TEXT = ", request.text)
 		if (request.status_code == 200):
 			self.attributes = json.loads(request.text)
 		else:
