@@ -1,11 +1,11 @@
 <?php
 /******************************************************************************\
 |                                                                              |
-|                                YearFilter.php                                |
+|                                DateFilter.php                                |
 |                                                                              |
 |******************************************************************************|
 |                                                                              |
-|        This defines a utility for filtering by year.                         |
+|        This defines a utility for filtering by create date.                  |
 |                                                                              |
 |        Author(s): Abe Megahed                                                |
 |                                                                              |
@@ -20,7 +20,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 
-class YearFilter
+class DateFilter
 {
 	/**
 	 * Apply filter to query.
@@ -38,7 +38,7 @@ class YearFilter
 
 			// apply filter
 			//
-			$query = $query->where('year', '>=', $request->input('after'));
+			$query = $query->where('created_at', '>=', $request->input('after'));
 		}
 
 		// parse parameters
@@ -48,7 +48,8 @@ class YearFilter
 
 			// apply filter
 			//
-			$query = $query->where('year', '=', $date);
+			$query = $query->where('created_at', '>', $date)
+				->where('created_at', '>', $date + 1);
 		}
 
 		// parse parameters
@@ -58,7 +59,7 @@ class YearFilter
 
 			// apply filter
 			//
-			$query = $query->where('year', '<', $before);
+			$query = $query->where('created_at', '<', $before);
 		}
 
 		return $query;

@@ -1,11 +1,11 @@
 <?php
 /******************************************************************************\
 |                                                                              |
-|                                YearFilter.php                                |
+|                             LangaugesFilter.php                              |
 |                                                                              |
 |******************************************************************************|
 |                                                                              |
-|        This defines a utility for filtering by year.                         |
+|        This defines a utility for filtering by langauge.                     |
 |                                                                              |
 |        Author(s): Abe Megahed                                                |
 |                                                                              |
@@ -20,7 +20,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 
-class YearFilter
+class LanguagesFilter
 {
 	/**
 	 * Apply filter to query.
@@ -33,32 +33,12 @@ class YearFilter
 
 		// parse parameters
 		//
-		if ($request->has('after')) {
-			$after = $request->input('after');
+		if ($request->has('language')) {
+			$language = $request->input('language');
 
 			// apply filter
 			//
-			$query = $query->where('year', '>=', $request->input('after'));
-		}
-
-		// parse parameters
-		//
-		if ($request->has('year')) {
-			$date = $request->input('year');
-
-			// apply filter
-			//
-			$query = $query->where('year', '=', $date);
-		}
-
-		// parse parameters
-		//
-		if ($request->has('before')) {
-			$before = $request->input('before');
-
-			// apply filter
-			//
-			$query = $query->where('year', '<', $before);
+			$query = $query->where('languages', 'like', $language . '%');
 		}
 
 		return $query;

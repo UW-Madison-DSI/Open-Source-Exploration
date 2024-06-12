@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GitHubRepository extends Model
+class GitLabProject extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'github.wisconsin_repositories';
+    protected $table = 'gitlab.projects';
 
     /**
      * The primary key associated with the table.

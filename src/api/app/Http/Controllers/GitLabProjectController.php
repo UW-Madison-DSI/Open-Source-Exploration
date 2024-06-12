@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\GitHubRepository;
-use App\Http\Filters\YearFilter;
+use App\Models\GitLabProject;
+use App\Http\Filters\DateFilter;
 use App\Http\Filters\LimitFilter;
 use App\Http\Filters\LicenseFilter;
-use App\Http\Filters\LanguageFilter;
+use App\Http\Filters\LanguagesFilter;
 
-class GitHubRepositoryController extends Controller
+class GitLabProjectController extends Controller
 {
 
 	//
@@ -17,44 +17,44 @@ class GitHubRepositoryController extends Controller
 	//
 
 	/**
-	 * Get a particular repository.
+	 * Get a particular project.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
-	 * @return App\Models\GitHubRepository
+	 * @return App\Models\GitLabProject
 	 */
 	public static function getIndex(Request $request, string $id) {
 
 		// find repository by id
 		//
-		$repository = GitHubRepository::find($id);
+		$repository = GitLabProject::find($id);
 
 		// check if found
 		//
 		if (!$repository) {
-			return response("GitHub repository not found.", 404);
+			return response("GitLab project not found.", 404);
 		}
 
 		return $repository;
 	}
 
 	/**
-	 * Get all repositories.
+	 * Get all projects.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
-	 * @return App\Models\GitHubRepository[]
+	 * @return App\Models\GitLabProject[]
 	 */
 	public static function getAll(Request $request) {
 
 		// create query
 		//
-		$query = GitHubRepository::query();
+		$query = GitLabProject::query();
 
 		// apply filters
 		//
-		$query = YearFilter::applyTo($request, $query);
+		$query = DateFilter::applyTo($request, $query);
 		$query = LimitFilter::applyTo($request, $query);
 		$query = LicenseFilter::applyTo($request, $query);
-		$query = LanguageFilter::applyTo($request, $query);
+		$query = LanguagesFilter::applyTo($request, $query);
 
 		// perform query
 		//
@@ -62,7 +62,7 @@ class GitHubRepositoryController extends Controller
 	}
 
 	/**
-	 * Get the number of repositories.
+	 * Get the number of projects.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return integer
@@ -71,13 +71,13 @@ class GitHubRepositoryController extends Controller
 
 		// create query
 		//
-		$query = GitHubRepository::query();
+		$query = GitLabProject::query();
 
 		// apply filters
 		//
-		$query = YearFilter::applyTo($request, $query);
+		$query = DateFilter::applyTo($request, $query);
 		$query = LicenseFilter::applyTo($request, $query);
-		$query = LanguageFilter::applyTo($request, $query);
+		$query = LanguagesFilter::applyTo($request, $query);
 
 		// perform query
 		//
@@ -85,7 +85,7 @@ class GitHubRepositoryController extends Controller
 	}
 
 	/**
-	 * Get the number of repositories by year.
+	 * Get the number of projects by year.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return object
@@ -99,19 +99,20 @@ class GitHubRepositoryController extends Controller
 
 			// create query
 			//
-			$query = GitHubRepository::where('year', '=', $year);
+			$query = GitLabProject::where('created_at', '>', strval($year))
+				->where('created_at', '<', strval($year + 1));
 
 			// apply filters
 			//
 			$query = LicenseFilter::applyTo($request, $query);
-			$query = LanguageFilter::applyTo($request, $query);
+			$query = LanguagesFilter::applyTo($request, $query);
 
 			// perform query
 			//
 			$count = $query->count();
-			if ($count) {
+			// if ($count) {
 				$nums[$year] = $count;
-			}
+			// }
 		}
 
 		return $nums;
@@ -122,7 +123,7 @@ class GitHubRepositoryController extends Controller
 	//
 
 	/**
-	 * Get repository languages.
+	 * Get project languages.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return string[]
@@ -131,23 +132,44 @@ class GitHubRepositoryController extends Controller
 
 		// create query
 		//
-		$query = GitHubRepository::whereNotNull('language')->select('language')->distinct();
+		$query = GitLabProject::whereNotNull('languages');
 
 		// apply filters
 		//
-		$query = YearFilter::applyTo($request, $query);
+		$query = DateFilter::applyTo($request, $query);
 		$query = LicenseFilter::applyTo($request, $query);
+
+		// get languages from projects
+		//
+		$languages = [];
+		$projects = $query->get();
+		for ($i = 0; $i < count($projects); $i++) {
+			$project = $projects[$i];
+			$projectLanguages = explode(',', $project['languages']);
+
+			// find primary language
+			//
+			$projectLanguage = $projectLanguages[0];
+
+			// strip version from language
+			//
+			$language = explode(':', $projectLanguage)[0];
+
+			// add language to list
+			//
+			if (!in_array($language, $languages)) {
+				array_push($languages, $language);
+			}
+		}
+		sort($languages);
 
 		// perform query
 		//
-		$languages = $query->get()->pluck('language')->toArray();
-		sort($languages);
-
 		return $languages;
 	}
 
 	/**
-	 * Get repository language counts.
+	 * Get project language counts.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return Object
@@ -161,11 +183,11 @@ class GitHubRepositoryController extends Controller
 
 			// create query
 			//
-			$query = GitHubRepository::where('language', '=', $language);
+			$query = GitLabProject::where('languages', 'like', $language . '%');
 
 			// apply filters
 			//
-			$query = YearFilter::applyTo($request, $query);
+			$query = DateFilter::applyTo($request, $query);
 			$query = LicenseFilter::applyTo($request, $query);
 
 			// perform query
@@ -180,7 +202,7 @@ class GitHubRepositoryController extends Controller
 	}
 
 	/**
-	 * Get repository language counts by year.
+	 * Get project language counts by year.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return string[]
@@ -198,8 +220,9 @@ class GitHubRepositoryController extends Controller
 
 				// create query
 				//
-				$query = GitHubRepository::where('year', '=', $year)
-					->where('language', '=', $language);
+				$query = GitLabProject::where('created_at', '>', strval($year))
+					->where('created_at', '<', strval($year + 1))
+					->where('languages', 'like', $language . '%');
 
 				// apply filters
 				//
@@ -222,7 +245,7 @@ class GitHubRepositoryController extends Controller
 	//
 
 	/**
-	 * Get repository licenses.
+	 * Get project licenses.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return string[]
@@ -231,12 +254,12 @@ class GitHubRepositoryController extends Controller
 
 		// create query
 		//
-		$query = GitHubRepository::whereNotNull('license_key')->select('license_key')->distinct();
+		$query = GitLabProject::whereNotNull('license_key')->select('license_key')->distinct();
 
 		// apply filters
 		//
-		$query = YearFilter::applyTo($request, $query);
-		$query = LanguageFilter::applyTo($request, $query);
+		$query = DateFilter::applyTo($request, $query);
+		$query = LanguagesFilter::applyTo($request, $query);
 
 		// perform query
 		//
@@ -244,7 +267,7 @@ class GitHubRepositoryController extends Controller
 	}
 
 	/**
-	 * Get repository license counts.
+	 * Get project license counts.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return Object
@@ -258,12 +281,12 @@ class GitHubRepositoryController extends Controller
 
 			// create query
 			//
-			$query = GitHubRepository::where('license_key', '=', $license);
+			$query = GitLabProject::where('license_key', '=', $license);
 
 			// apply filters
 			//
-			$query = YearFilter::applyTo($request, $query);
-			$query = LanguageFilter::applyTo($request, $query);
+			$query = DateFilter::applyTo($request, $query);
+			$query = LanguagesFilter::applyTo($request, $query);
 
 			$counts[$license] = $query->count();
 		}
@@ -272,7 +295,7 @@ class GitHubRepositoryController extends Controller
 	}
 
 	/**
-	 * Get repository license counts by year.
+	 * Get project license counts by year.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return string[]
@@ -290,12 +313,13 @@ class GitHubRepositoryController extends Controller
 
 				// create query
 				//
-				$query = GitHubRepository::where('year', '=', $year)
+				$query = GitLabProject::where('created_at', '>', strval($year))
+					->where('created_at', '<', strval($year + 1))
 					->where('license_key', '=', $license);
 
 				// apply filters
 				//
-				$query = LanguageFilter::applyTo($request, $query);
+				$query = LanguagesFilter::applyTo($request, $query);
 
 				// perform query
 				//
@@ -314,29 +338,7 @@ class GitHubRepositoryController extends Controller
 	//
 
 	/**
-	 * Get repository years.
-	 *
-	 * @param Illuminate\Http\Request $request - the Http request object
-	 * @return string[]
-	 */
-	public static function getYears(Request $request) {
-
-		// create query
-		//
-		$query = GitHubRepository::select('year')->distinct();
-
-		// apply filters
-		//
-		$query = LicenseFilter::applyTo($request, $query);
-		$query = LanguageFilter::applyTo($request, $query);
-
-		// perform query
-		//
-		return $query->get()->pluck('year');
-	}
-
-	/**
-	 * Get repository first year.
+	 * Get project first year.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return string[]
@@ -345,15 +347,15 @@ class GitHubRepositoryController extends Controller
 
 		// create query
 		//
-		$years = self::getYears($request);
+		$first = GitLabProject::orderBy('created_at', 'ASC')->first();
 
-		// perform query
+		// extract year
 		//
-		return $years[0];
+		return date("Y", strtotime($first->created_at));
 	}
 
 	/**
-	 * Get repository last year.
+	 * Get project last year.
 	 *
 	 * @param Illuminate\Http\Request $request - the Http request object
 	 * @return string[]
@@ -362,10 +364,10 @@ class GitHubRepositoryController extends Controller
 
 		// create query
 		//
-		$years = self::getYears($request);
+		$first = GitLabProject::orderBy('created_at', 'DESC')->first();
 
-		// perform query
+		// extract year
 		//
-		return $years[count($years) - 1];
+		return date("Y", strtotime($first->created_at));
 	}
 }
