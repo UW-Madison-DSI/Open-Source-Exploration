@@ -12,327 +12,345 @@ use App\Http\Filters\LanguageFilter;
 class GitHubRepositoryController extends Controller
 {
 
-    //
-    // getting methods
-    //
+	//
+	// getting methods
+	//
 
-    /**
-     * Get a particular repository
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return App\Models\Repository
-     */
-    public static function getIndex(Request $request, string $id) {
+	/**
+	 * Get a particular repository
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return App\Models\Repository
+	 */
+	public static function getIndex(Request $request, string $id) {
 
-        // find repository by id
-        //
-        $repository = GitHubRepository::find($id);
+		// find repository by id
+		//
+		$repository = GitHubRepository::find($id);
 
-        // check if found
-        //
-        if (!$repository) {
-            return response("GitHub repository not found.", 404);
-        }
+		// check if found
+		//
+		if (!$repository) {
+			return response("GitHub repository not found.", 404);
+		}
 
-        return $repository;
-    }
+		return $repository;
+	}
 
-    /**
-     * Get repositories
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return App\Models\Repository[]
-     */
-    public static function getAll(Request $request) {
+	/**
+	 * Get repositories
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return App\Models\Repository[]
+	 */
+	public static function getAll(Request $request) {
 
-        // create query
-        //
-        $query = GitHubRepository::query();
+		// create query
+		//
+		$query = GitHubRepository::query();
 
-        // apply filters
-        //
-        $query = YearFilter::applyTo($request, $query);
-        $query = LimitFilter::applyTo($request, $query);
-        $query = LicenseFilter::applyTo($request, $query);
-        $query = LanguageFilter::applyTo($request, $query);
+		// apply filters
+		//
+		$query = YearFilter::applyTo($request, $query);
+		$query = LimitFilter::applyTo($request, $query);
+		$query = LicenseFilter::applyTo($request, $query);
+		$query = LanguageFilter::applyTo($request, $query);
 
-        // perform query
-        //
-        return $query->get();
-    }
+		// perform query
+		//
+		return $query->get();
+	}
 
-    /**
-     * Get the number of repositories
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return integer
-     */
-    public static function getNum(Request $request) {
+	/**
+	 * Get the number of repositories
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return integer
+	 */
+	public static function getNum(Request $request) {
 
-        // create query
-        //
-        $query = GitHubRepository::query();
+		// create query
+		//
+		$query = GitHubRepository::query();
 
-        // apply filters
-        //
-        $query = YearFilter::applyTo($request, $query);
-        $query = LicenseFilter::applyTo($request, $query);
-        $query = LanguageFilter::applyTo($request, $query);
+		// apply filters
+		//
+		$query = YearFilter::applyTo($request, $query);
+		$query = LicenseFilter::applyTo($request, $query);
+		$query = LanguageFilter::applyTo($request, $query);
 
-        // perform query
-        //
-        return $query->count();
-    }
+		// perform query
+		//
+		return $query->count();
+	}
 
-    /**
-     * Get the number of repositories by year
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return integer
-     */
-    public static function getNumByYear(Request $request) {
-        $firstYear = intval(self::getFirstYear($request));
-        $lastYear = intval(self::getLastYear($request));
+	/**
+	 * Get the number of repositories by year
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return integer
+	 */
+	public static function getNumByYear(Request $request) {
+		$firstYear = intval(self::getFirstYear($request));
+		$lastYear = intval(self::getLastYear($request));
 
-        $nums = [];
-        for ($year = $firstYear; $year < $lastYear; $year++) {
+		$nums = [];
+		for ($year = $firstYear; $year < $lastYear; $year++) {
 
-            // create query
-            //
-            $query = GitHubRepository::where('year', '=', $year);
+			// create query
+			//
+			$query = GitHubRepository::where('year', '=', $year);
 
-            // apply filters
-            //
-            $query = LicenseFilter::applyTo($request, $query);
-            $query = LanguageFilter::applyTo($request, $query);
+			// apply filters
+			//
+			$query = LicenseFilter::applyTo($request, $query);
+			$query = LanguageFilter::applyTo($request, $query);
 
-            // perform query
-            //
-            $nums[$year] = $query->count();
-        }
+			// perform query
+			//
+			$count = $query->count();
+			if ($count) {
+				$nums[$year] = $count;
+			}
+		}
 
-        return $nums;
-    }
+		return $nums;
+	}
 
-    //
-    // language querying methods
-    //
+	//
+	// language querying methods
+	//
 
-    /**
-     * Get languages
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return string[]
-     */
-    public static function getLanguages(Request $request) {
+	/**
+	 * Get languages
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return string[]
+	 */
+	public static function getLanguages(Request $request) {
 
-        // create query
-        //
-        $query = GitHubRepository::whereNotNull('language')->select('language')->distinct();
+		// create query
+		//
+		$query = GitHubRepository::whereNotNull('language')->select('language')->distinct();
 
-        // apply filters
-        //
-        $query = YearFilter::applyTo($request, $query);
-        $query = LicenseFilter::applyTo($request, $query);
+		// apply filters
+		//
+		$query = YearFilter::applyTo($request, $query);
+		$query = LicenseFilter::applyTo($request, $query);
 
-        // perform query
-        //
-        return $query->get()->pluck('language');
-    }
+		// perform query
+		//
+		return $query->get()->pluck('language');
+	}
 
-    /**
-     * Get language counts
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return Object
-     */
-    public static function getLanguageCounts(Request $request) {
-        $languages = self::getLanguages($request);
+	/**
+	 * Get language counts
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return Object
+	 */
+	public static function getLanguageCounts(Request $request) {
+		$languages = self::getLanguages($request);
 
-        $counts = [];
-        for ($j = 0; $j < count($languages); $j++) {
-            $language = $languages[$j];
-            $query = GitHubRepository::where('language', '=', $language);
+		$counts = [];
+		for ($j = 0; $j < count($languages); $j++) {
+			$language = $languages[$j];
+			$query = GitHubRepository::where('language', '=', $language);
 
-            // apply filters
-            //
-            $query = YearFilter::applyTo($request, $query);
-            $query = LicenseFilter::applyTo($request, $query);
+			// apply filters
+			//
+			$query = YearFilter::applyTo($request, $query);
+			$query = LicenseFilter::applyTo($request, $query);
 
-            $counts[$language] = $query->count();
-        }
+			// perform query
+			//
+			$count = $query->count();
+			if ($count) {
+				$counts[$language] = $count;
+			}
+		}
 
-        return $counts;
-    }
+		return $counts;
+	}
 
-    /**
-     * Get language counts by year
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return string[]
-     */
-    public static function getLanguageCountsByYear(Request $request) {
-        $languages = self::getLanguages($request);
-        $firstYear = intval(self::getFirstYear($request));
-        $lastYear = intval(self::getLastYear($request));
+	/**
+	 * Get language counts by year
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return string[]
+	 */
+	public static function getLanguageCountsByYear(Request $request) {
+		$languages = self::getLanguages($request);
+		$firstYear = intval(self::getFirstYear($request));
+		$lastYear = intval(self::getLastYear($request));
 
-        $years = [];
-        for ($year = $firstYear; $year < $lastYear; $year++) {
-            $years[$year] = [];
-            for ($j = 0; $j < count($languages); $j++) {
-                $language = $languages[$j];
-                $query = GitHubRepository::where('year', '=', $year)
-                    ->where('language', '=', $language);
+		$years = [];
+		for ($year = $firstYear; $year < $lastYear; $year++) {
+			$years[$year] = [];
+			for ($j = 0; $j < count($languages); $j++) {
+				$language = $languages[$j];
+				$query = GitHubRepository::where('year', '=', $year)
+					->where('language', '=', $language);
 
-                // apply filters
-                //
-                $query = LicenseFilter::applyTo($request, $query);
+				// apply filters
+				//
+				$query = LicenseFilter::applyTo($request, $query);
 
-                $years[$year][$language] = $query->count();
-            }
-        }
+				// perform query
+				//
+				$count = $query->count();
+				if ($count) {
+					$years[$year][$language] = $count;
+				}
+			}
+		}
 
-        return $years;
-    }
+		return $years;
+	}
 
-    //
-    // license querying methods
-    //
+	//
+	// license querying methods
+	//
 
-    /**
-     * Get licenses
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return string[]
-     */
-    public static function getLicenses(Request $request) {
+	/**
+	 * Get licenses
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return string[]
+	 */
+	public static function getLicenses(Request $request) {
 
-        // create query
-        //
-        $query = GitHubRepository::whereNotNull('license_key')->select('license_key')->distinct();
+		// create query
+		//
+		$query = GitHubRepository::whereNotNull('license_key')->select('license_key')->distinct();
 
-        // apply filters
-        //
-        $query = YearFilter::applyTo($request, $query);
-        $query = LanguageFilter::applyTo($request, $query);
+		// apply filters
+		//
+		$query = YearFilter::applyTo($request, $query);
+		$query = LanguageFilter::applyTo($request, $query);
 
-        // perform query
-        //
-        return $query->get()->pluck('license_key');
-    }
+		// perform query
+		//
+		return $query->get()->pluck('license_key');
+	}
 
-    /**
-     * Get license counts
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return Object
-     */
-    public static function getLicenseCounts(Request $request) {
-        $licenses = self::getLicenses($request);
+	/**
+	 * Get license counts
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return Object
+	 */
+	public static function getLicenseCounts(Request $request) {
+		$licenses = self::getLicenses($request);
 
-        $counts = [];
-        for ($j = 0; $j < count($licenses); $j++) {
-            $license = $licenses[$j];
-            $query = GitHubRepository::where('license_key', '=', $license);
+		$counts = [];
+		for ($j = 0; $j < count($licenses); $j++) {
+			$license = $licenses[$j];
+			$query = GitHubRepository::where('license_key', '=', $license);
 
-            // apply filters
-            //
-            $query = YearFilter::applyTo($request, $query);
-            $query = LanguageFilter::applyTo($request, $query);
+			// apply filters
+			//
+			$query = YearFilter::applyTo($request, $query);
+			$query = LanguageFilter::applyTo($request, $query);
 
-            $counts[$license] = $query->count();
-        }
+			$counts[$license] = $query->count();
+		}
 
-        return $counts;
-    }
+		return $counts;
+	}
 
-    /**
-     * Get license counts by year
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return string[]
-     */
-    public static function getLicenseCountsByYear(Request $request) {
-        $licenses = self::getLicenses($request);
-        $firstYear = intval(self::getFirstYear($request));
-        $lastYear = intval(self::getLastYear($request));
+	/**
+	 * Get license counts by year
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return string[]
+	 */
+	public static function getLicenseCountsByYear(Request $request) {
+		$licenses = self::getLicenses($request);
+		$firstYear = intval(self::getFirstYear($request));
+		$lastYear = intval(self::getLastYear($request));
 
-        $years = [];
-        for ($year = $firstYear; $year < $lastYear; $year++) {
-            $years[$year] = [];
-            for ($j = 0; $j < count($licenses); $j++) {
-                $license = $licenses[$j];
-                $query = GitHubRepository::where('year', '=', $year)
-                    ->where('license_key', '=', $license);
+		$years = [];
+		for ($year = $firstYear; $year < $lastYear; $year++) {
+			$years[$year] = [];
+			for ($j = 0; $j < count($licenses); $j++) {
+				$license = $licenses[$j];
+				$query = GitHubRepository::where('year', '=', $year)
+					->where('license_key', '=', $license);
 
-                // apply filters
-                //
-                $query = LanguageFilter::applyTo($request, $query);
+				// apply filters
+				//
+				$query = LanguageFilter::applyTo($request, $query);
 
-                $years[$year][$license] = $query->count();
-            }
-        }
+				// perform query
+				//
+				$count = $query->count();
+				if ($count) {
+					$years[$year][$license] = $count;
+				}
+			}
+		}
 
-        return $years;
-    }
+		return $years;
+	}
 
-    //
-    // year querying methods
-    //
+	//
+	// year querying methods
+	//
 
-    /**
-     * Get years
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return string[]
-     */
-    public static function getYears(Request $request) {
+	/**
+	 * Get years
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return string[]
+	 */
+	public static function getYears(Request $request) {
 
-        // create query
-        //
-        $query = GitHubRepository::select('year')->distinct();
+		// create query
+		//
+		$query = GitHubRepository::select('year')->distinct();
 
-        // apply filters
-        //
-        $query = LicenseFilter::applyTo($request, $query);
-        $query = LanguageFilter::applyTo($request, $query);
+		// apply filters
+		//
+		$query = LicenseFilter::applyTo($request, $query);
+		$query = LanguageFilter::applyTo($request, $query);
 
-        // perform query
-        //
-        return $query->get()->pluck('year');
-    }
+		// perform query
+		//
+		return $query->get()->pluck('year');
+	}
 
-    /**
-     * Get first year
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return string[]
-     */
-    public static function getFirstYear(Request $request) {
+	/**
+	 * Get first year
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return string[]
+	 */
+	public static function getFirstYear(Request $request) {
 
-        // create query
-        //
-        $years = self::getYears($request);
+		// create query
+		//
+		$years = self::getYears($request);
 
-        // perform query
-        //
-        return $years[0];
-    }
+		// perform query
+		//
+		return $years[0];
+	}
 
-    /**
-     * Get last year
-     *
-     * @param Illuminate\Http\Request $request - the Http request object
-     * @return string[]
-     */
-    public static function getLastYear(Request $request) {
+	/**
+	 * Get last year
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return string[]
+	 */
+	public static function getLastYear(Request $request) {
 
-        // create query
-        //
-        $years = self::getYears($request);
+		// create query
+		//
+		$years = self::getYears($request);
 
-        // perform query
-        //
-        return $years[count($years) - 1];
-    }
+		// perform query
+		//
+		return $years[count($years) - 1];
+	}
 }
