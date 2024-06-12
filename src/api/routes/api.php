@@ -64,22 +64,6 @@ Route::get('/github/repositories/licenses/counts/year', function (Request $reque
 });
 
 //
-// repository year querying methods
-//
-
-Route::get('/github/repositories/years', function (Request $request) {
-    return GitHubRepositoryController::getYears($request);
-});
-
-Route::get('/github/repositories/years/first', function (Request $request) {
-    return GitHubRepositoryController::getFirstYear($request);
-});
-
-Route::get('/github/repositories/years/last', function (Request $request) {
-    return GitHubRepositoryController::getLastYear($request);
-});
-
-//
 // repository querying functions
 //
 

@@ -32,13 +32,3 @@ The following routes are used to query information about the licenses that are u
 | GET | [/github/repositories/licenses](./github/licenses/get.md) | Get a list of the licenses used in the GitHub repositories. |
 | GET | [/github/repositories/licenses/counts](./github/licenses/get-counts.md) | Get the number of GitHub repositories by license. |
 | GET | [/github/repositories/licenses/counts/year](./github/licenses/get-counts-by-year.md) | Get the number of GitHub repositories with each license by year. |
-
-### Year Querying Routes
-
-The following routes are used to query information about the years that repositories were created.
-
-| Action | Route | Description |
-| --- | --- | --- |
-| GET | [/github/repositories/years](./github/years/get.md) | Get the years represented in the collection of GitHub repositories. |
-| GET | [/github/repositories/years/first](./github/years/get-first.md) | Get the first year for which we have a GitHub repository. |
-| GET | [/github/repositories/years/last](./github/years/get-last.md) | Get the last year for which we have a GitHub repository. |
