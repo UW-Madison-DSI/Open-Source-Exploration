@@ -91,6 +91,10 @@ Route::get('/github/repositories/num', function (Request $request) {
     return GitHubRepositoryController::getNum($request);
 });
 
+Route::get('/github/repositories/num/year', function (Request $request) {
+    return GitHubRepositoryController::getNumByYear($request);
+});
+
 Route::get('/github/repositories/{id}', function (Request $request, string $id) {
     return GitHubRepositoryController::getIndex($request, $id);
 });

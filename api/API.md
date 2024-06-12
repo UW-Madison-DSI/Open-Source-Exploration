@@ -10,6 +10,7 @@ The following routes are used to query information about repositories.
 | --- | --- | --- |
 | GET | [/github/repositories](./github/repositories/get.md) | Get all GitHub repositories. |
 | GET | [/github/repositories/num](./github/repositories/get-num.md) | Get the number of GitHub repositories.  |
+| GET | [/github/repositories/num/year](./github/repositories/get-num-by-year.md) | Get the number of GitHub repositories per year.  |
 | GET | [/github/repositories/{id}](./github/repositories/get-by-id.md) | Get information about a particular GitHub repository. |
 
 ### Language Querying Routes

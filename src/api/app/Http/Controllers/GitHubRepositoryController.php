@@ -84,6 +84,36 @@ class GitHubRepositoryController extends Controller
         return $query->count();
     }
 
+    /**
+     * Get the number of repositories by year
+     *
+     * @param Illuminate\Http\Request $request - the Http request object
+     * @return integer
+     */
+    public static function getNumByYear(Request $request) {
+        $firstYear = intval(self::getFirstYear($request));
+        $lastYear = intval(self::getLastYear($request));
+
+        $nums = [];
+        for ($year = $firstYear; $year < $lastYear; $year++) {
+
+            // create query
+            //
+            $query = GitHubRepository::where('year', '=', $year);
+
+            // apply filters
+            //
+            $query = LicenseFilter::applyTo($request, $query);
+            $query = LanguageFilter::applyTo($request, $query);
+
+            // perform query
+            //
+            $nums[$year] = $query->count();
+        }
+
+        return $nums;
+    }
+
     //
     // language querying methods
     //

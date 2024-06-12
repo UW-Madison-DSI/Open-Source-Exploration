@@ -11,7 +11,7 @@ class GitHubRepository extends Model
      *
      * @var string
      */
-    protected $table = 'wisconsin_repositories';
+    protected $table = 'github.wisconsin_repositories';
 
     /**
      * The primary key associated with the table.
