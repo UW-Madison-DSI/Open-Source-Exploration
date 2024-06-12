@@ -31,6 +31,11 @@ use App\Http\Controllers\GitHubRepositoryController;
 |
 */
 
+Route::get('/', function (Request $request) {
+    header("Content-type: text/html");
+    return view('api-welcome')->render();
+});
+
 //
 // repository language querying functions
 //
