@@ -9,7 +9,7 @@
 
 This project is means of exploring open source activity associated with university of Wisconsin-Madison.
 
-The project contains scripts for downloading information from GitHub and GitLab about open source projects and people and storing this information in a database for further analysis.
+The project contains scripts for downloading information from GitHub and GitLab about open source projects and people and storing this information in a database for further analysis and includes a [REST API](./api/API.md) for retreiving this information.
 
 ## Data
 
@@ -78,6 +78,8 @@ Once you have created a database and have configured the code with your access t
 
 <pre>
 src/
+│
+├── api/
 │
 ├── github/
 │   ├── bash/

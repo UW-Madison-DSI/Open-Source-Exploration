@@ -3,5 +3,6 @@
 .jupyter/
 log/
 config/
+.env
 *.swp
 src-with-tokens/
