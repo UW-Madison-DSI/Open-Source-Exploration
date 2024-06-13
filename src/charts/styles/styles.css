@@ -1,0 +1,21 @@
+body {
+	font-family: sans-serif;
+}
+
+.header {
+	text-align: center;
+}
+
+.logo {
+	height: 100px;
+}
+
+.title {
+	text-align: center;
+}
+
+.chart {
+	width: 800px;
+	height: 400px;
+	margin: 50px auto;
+}

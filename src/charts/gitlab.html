@@ -1,0 +1,170 @@
+<!DOCTYPE html> 
+<html lang="en">
+	<head>
+		<!-- metadata -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<!-- system scripts -->
+		<script type="text/javascript" src="jquery/jquery.js"></script>
+		<script type="text/javascript" src="jquery/jquery.jqplot.js"></script>
+		<script type="text/javascript" src="jquery/plugins/jqplot.barRenderer.js"></script>
+		<script type="text/javascript" src="jquery/plugins/jqplot.categoryAxisRenderer.js"></script>
+		<script type="text/javascript" src="jquery/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+		<script type="text/javascript" src="jquery/plugins/jqplot.canvasTextRenderer.js"></script>
+		<script type="text/javascript" src="jquery/plugins/jqplot.pointLabels.js"></script>
+
+		<!-- styles -->
+		<link rel="stylesheet" type="text/css" href="jquery/jquery.jqplot.css" />
+		<link rel="stylesheet" type="text/css" href="styles/styles.css" />
+	</head>
+
+	<body>
+		<div class="header">
+			<img class="logo" src="images/gitlab-logo.svg">
+			<h1 class="title">GitLab Statistics</h1>
+		</div>
+		<div id="chart1" class="chart"></div>
+		<div id="chart2" class="chart"></div>
+		<div id="chart3" class="chart"></div>
+		<script>
+
+			//
+			// functions
+			//
+
+			function getValues(data) {
+
+				// get values from object
+				//
+				let keys = Object.keys(data);
+				let values = [];
+				for (let i = 0; i < keys.length; i++) {
+					values.push(data[keys[i]]);
+				}
+
+				return values;
+			}
+
+			//
+			// plotting functions
+			//
+
+			function showBarChart(id, values, labels, options) {
+				$.jqplot(id, [values], {
+					title: options? options.title : undefined,
+					animate: false,
+					seriesDefaults:{
+						renderer:$.jqplot.BarRenderer,
+						pointLabels: { 
+							show: true
+						}
+					},
+					seriesColors:[options? options.color : undefined],
+					axes: {
+						xaxis: {
+							renderer: $.jqplot.CategoryAxisRenderer,
+							ticks: labels
+						}
+					},
+					axesDefaults: {
+						tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+						tickOptions: {
+							angle: options? options.angle : undefined,
+							fontSize: options? options.fontSize : undefined
+						}
+					},
+					highlighter: {
+						show: true
+					}
+				});
+			}
+
+			//
+			// GitLab plotting functions
+			//
+
+
+			function showGitLabProjects() {
+				$.ajax({
+					url: 'https://datascience.sharedigm.com/open-source/public/api/gitlab/projects/num/year',
+					type: 'GET',
+
+					// callbacks
+					//
+					success: (data) => {
+						let keys = Object.keys(data);
+						let values = [];
+						for (let i = 0; i < keys.length; i++) {
+							values.push(data[keys[i]]);
+						}
+
+						// show chart
+						//
+						showBarChart('chart1', values, keys, {
+							title: 'GitLab Projects By Year',
+							color: '#E24329', 
+							angle: -45
+						});
+					}
+				});	
+			}
+
+			function showhGitLabProjectsByLicense() {
+				$.ajax({
+					url: 'https://datascience.sharedigm.com/open-source/public/api/gitlab/projects/licenses/counts',
+					type: 'GET',
+
+					// callbacks
+					//
+					success: (data) => {
+						let keys = Object.keys(data);
+						let values = getValues(data);
+
+						// show chart
+						//
+						showBarChart('chart2', values, keys, {
+							title: 'GitLab Projects By License',
+							color: '#E24329', 
+							angle: -45
+						});
+					}
+				});	
+			}
+
+			function showhGitLabProjectsByLanguage() {
+				$.ajax({
+					url: 'https://datascience.sharedigm.com/open-source/public/api/gitlab/projects/languages/counts',
+					type: 'GET',
+
+					// callbacks
+					//
+					success: (data) => {
+						let keys = Object.keys(data);
+						let values = getValues(data);
+
+						// show chart
+						//
+						showBarChart('chart3', values, keys, {
+							title: 'GitLab Projects By Language',
+							color: '#E24329', 
+							angle: -45, 
+							fontSize: '10px'
+						});
+					}
+				});	
+			}
+
+			// start
+			//
+			$(document).ready(function() {
+				showGitLabProjects();
+				showhGitLabProjectsByLicense();
+				showhGitLabProjectsByLanguage();
+			});
+		</script>
+	</body>
+</html>
