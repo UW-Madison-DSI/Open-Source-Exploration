@@ -18,6 +18,19 @@ This route accepts the following optional query string parameters:
 
 object
 
+| Attribute | Type | Description |
+| --- | --- | --- |
+| all | integer | The number of GitHub repositories. |
+| descriptions | integer | The number of GitHub repositories with descriptions. |
+| readmes | integer | The number of GitHub repositories with READMEs. |
+| readme_images | integer | The number of GitHub repositories with READMEs containing images. |
+| licenses | integer | The number of GitHub repositories with licenses. |
+| homepages | integer | The number of GitHub repositories with homepages. |
+| stargazers | integer | The number of GitHub repositories with stargazers. |
+| watchers | integer | The number of GitHub repositories with watchers. |
+| forks | integer | The number of GitHub repositories with forks. |
+| open_issues | integer | The number of GitHub repositories with open issues. |
+
 ### Example
 
 - Get the counts of GitHub repositories written in the year 2020.

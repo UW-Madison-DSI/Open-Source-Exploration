@@ -18,6 +18,17 @@ This route accepts the following optional query string parameters:
 
 object
 
+| Attribute | Type | Description |
+| --- | --- | --- |
+| all | integer | The total number of GitLab projects. |
+| descriptions | integer | The number of GitLab projects with descriptions. |
+| readmes | integer | The number of GitLab projects with READMEs. |
+| readme_images | integer | The number of GitLab projects with READMEs containing images. |
+| licenses | integer | The number of GitLab projects with licenses. |
+| stars | integer | The number of GitLab projects with stars. |
+| forks | integer | The number of GitLab projects with forks. |
+| open_issues | integer | The number of GitLab projects with open issues. |
+
 ### Example
 
 - Get the counts of GitLab projects written in the year 2020.
