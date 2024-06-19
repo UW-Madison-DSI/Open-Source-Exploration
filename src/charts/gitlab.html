@@ -9,16 +9,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<!-- system scripts -->
-		<script type="text/javascript" src="jquery/jquery.js"></script>
-		<script type="text/javascript" src="jquery/jquery.jqplot.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.barRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.categoryAxisRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.canvasAxisTickRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.canvasTextRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.pointLabels.js"></script>
+		<script type="text/javascript" src="library/jquery/jquery-3.6.0.js"></script>
+		<script type="text/javascript" src="library/plotly/plotly-2.32.0.min.js"></script>
 
-		<!-- styles -->
-		<link rel="stylesheet" type="text/css" href="jquery/jquery.jqplot.css" />
+		<!-- custom scripts -->
+		<script type="text/javascript" src="scripts/bar-chart.js"></script>
+
+		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="styles/styles.css" />
 	</head>
 
@@ -27,132 +24,117 @@
 			<img class="logo" src="images/gitlab-logo.svg">
 			<h1 class="title">GitLab Statistics</h1>
 		</div>
-		<div id="chart1" class="chart"></div>
-		<div id="chart2" class="chart"></div>
-		<div id="chart3" class="chart"></div>
+		<div class="charts">
+			<div id="chart1" class="chart"></div>
+			<div id="chart2" class="chart"></div>
+			<div id="chart3" class="chart"></div>
+			<div id="chart4" class="chart"></div>
+		</div>
 		<script>
 
 			//
-			// functions
+			// GitLab charting functions
 			//
 
-			function getValues(data) {
-
-				// get values from object
-				//
-				let keys = Object.keys(data);
-				let values = [];
-				for (let i = 0; i < keys.length; i++) {
-					values.push(data[keys[i]]);
-				}
-
-				return values;
-			}
-
-			//
-			// plotting functions
-			//
-
-			function showBarChart(id, values, labels, options) {
-				$.jqplot(id, [values], {
-					title: options? options.title : undefined,
-					animate: false,
-					seriesDefaults:{
-						renderer:$.jqplot.BarRenderer,
-						pointLabels: { 
-							show: true
-						}
-					},
-					seriesColors:[options? options.color : undefined],
-					axes: {
-						xaxis: {
-							renderer: $.jqplot.CategoryAxisRenderer,
-							ticks: labels
-						}
-					},
-					axesDefaults: {
-						tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-						tickOptions: {
-							angle: options? options.angle : undefined,
-							fontSize: options? options.fontSize : undefined
-						}
-					},
-					highlighter: {
-						show: true
-					}
-				});
-			}
-
-			//
-			// GitLab plotting functions
-			//
-
-
-			function showGitLabProjects() {
+			function showGitLabProjects(id, baseUrl) {
 				$.ajax({
-					url: 'https://datascience.sharedigm.com/open-source/public/api/gitlab/projects/num/year',
+					url: baseUrl + '/gitlab/projects/num/year',
 					type: 'GET',
 
 					// callbacks
 					//
 					success: (data) => {
 						let keys = Object.keys(data);
-						let values = [];
-						for (let i = 0; i < keys.length; i++) {
-							values.push(data[keys[i]]);
-						}
+						let values = getValues(data);
 
 						// show chart
 						//
-						showBarChart('chart1', values, keys, {
+						showBarChart(id, values, keys, {
 							title: 'GitLab Projects By Year',
-							color: '#E24329', 
-							angle: -45
+							color: '#E24329'
 						});
 					}
 				});	
 			}
 
-			function showhGitLabProjectsByLicense() {
+			function showGitLabProjectsByLicense(id, baseUrl) {
 				$.ajax({
-					url: 'https://datascience.sharedigm.com/open-source/public/api/gitlab/projects/licenses/counts',
+					url: baseUrl + '/gitlab/projects/licenses/counts',
 					type: 'GET',
 
 					// callbacks
 					//
 					success: (data) => {
 						let keys = Object.keys(data);
-						let values = getValues(data);
+						let values = getPercentages(data);
 
 						// show chart
 						//
-						showBarChart('chart2', values, keys, {
+						showBarChart(id, values, keys, {
 							title: 'GitLab Projects By License',
-							color: '#E24329', 
-							angle: -45
+							color: '#E24329'
 						});
 					}
 				});	
 			}
 
-			function showhGitLabProjectsByLanguage() {
+			function showGitLabProjectsByLanguage(id, baseUrl) {
 				$.ajax({
-					url: 'https://datascience.sharedigm.com/open-source/public/api/gitlab/projects/languages/counts',
+					url: baseUrl + '/gitlab/projects/languages/counts',
 					type: 'GET',
 
 					// callbacks
 					//
 					success: (data) => {
 						let keys = Object.keys(data);
-						let values = getValues(data);
+						let values = getPercentages(data);
 
 						// show chart
 						//
-						showBarChart('chart3', values, keys, {
+						showBarChart(id, values, keys, {
 							title: 'GitLab Projects By Language',
-							color: '#E24329', 
-							angle: -45, 
-							fontSize: '10px'
+							color: '#E24329'
+						});
+					}
+				});	
+			}
+
+			function showGitLabProjectsByFeatures(id, baseUrl) {
+				$.ajax({
+					url: baseUrl + '/gitlab/projects/counts',
+					type: 'GET',
+
+					// callbacks
+					//
+					success: (data) => {
+						let labels = getLabels(data);
+						let values = getValues(data);
+
+						// format labels
+						//
+						for (let i = 0; i < labels.length; i++) {
+							labels[i] = labels[i].replace(/Readme/g, 'README');
+							if (labels[i] != 'All') {
+								labels[i] = 'with ' + labels[i];
+							}
+						}
+
+						// convert to percent
+						//
+						let total = data['all'];
+						for (let i = 0; i < values.length; i++) {
+							values[i] = Math.round(values[i] / total * 100) + '%';
+						}
+
+						delete(labels[0]);
+						delete(values[0]);
+
+						// show chart
+						//
+						showBarChart(id, values, labels, {
+							title: 'GitLab Projects By Features',
+							color: '#E24329',
+							maxY: 100
 						});
 					}
 				});	
@@ -160,11 +142,17 @@
 
 			// start
 			//
-			$(document).ready(function() {
-				showGitLabProjects();
-				showhGitLabProjectsByLicense();
-				showhGitLabProjectsByLanguage();
-			});
+			window.onload = function() {
+				let server = 'https://datascience.sharedigm.com';
+				let baseUrl = server + '/open-source/public/api';
+				// let server = 'http://localhost';
+				// let baseUrl = server + '/open-source-server/public/api';
+
+				showGitLabProjects('chart1', baseUrl);
+				showGitLabProjectsByLicense('chart2', baseUrl);
+				showGitLabProjectsByLanguage('chart3', baseUrl);
+				showGitLabProjectsByFeatures('chart4', baseUrl);
+			}
 		</script>
 	</body>
 </html>

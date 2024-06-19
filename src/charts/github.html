@@ -9,16 +9,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<!-- system scripts -->
-		<script type="text/javascript" src="jquery/jquery.js"></script>
-		<script type="text/javascript" src="jquery/jquery.jqplot.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.barRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.categoryAxisRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.canvasAxisTickRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.canvasTextRenderer.js"></script>
-		<script type="text/javascript" src="jquery/plugins/jqplot.pointLabels.js"></script>
+		<script type="text/javascript" src="library/jquery/jquery-3.6.0.js"></script>
+		<script type="text/javascript" src="library/plotly/plotly-2.32.0.min.js"></script>
 
-		<!-- styles -->
-		<link rel="stylesheet" type="text/css" href="jquery/jquery.jqplot.css" />
+		<!-- custom scripts -->
+		<script type="text/javascript" src="scripts/bar-chart.js"></script>
+
+		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="styles/styles.css" />
 	</head>
 
@@ -27,69 +24,21 @@
 			<img class="logo" src="images/github-logo.svg">
 			<h1 class="title">GitHub Statistics</h1>
 		</div>
-		<div id="chart1" class="chart"></div>
-		<div id="chart2" class="chart"></div>
-		<div id="chart3" class="chart"></div>
+		<div class="charts">
+			<div id="chart1" class="chart"></div>
+			<div id="chart2" class="chart"></div>
+			<div id="chart3" class="chart"></div>
+			<div id="chart4" class="chart"></div>
+		</div>
 		<script>
 
 			//
-			// functions
+			// GitHub charting functions
 			//
 
-			function getValues(data) {
-
-				// get values from object
-				//
-				let keys = Object.keys(data);
-				let values = [];
-				for (let i = 0; i < keys.length; i++) {
-					values.push(data[keys[i]]);
-				}
-
-				return values;
-			}
-
-			//
-			// plotting functions
-			//
-
-			function showBarChart(id, values, labels, options) {
-				$.jqplot(id, [values], {
-					title: options? options.title : undefined,
-					animate: false,
-					seriesDefaults:{
-						renderer:$.jqplot.BarRenderer,
-						pointLabels: { 
-							show: true
-						}
-					},
-					seriesColors:[options? options.color : undefined],
-					axes: {
-						xaxis: {
-							renderer: $.jqplot.CategoryAxisRenderer,
-							ticks: labels
-						}
-					},
-					axesDefaults: {
-						tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-						tickOptions: {
-							angle: options? options.angle : undefined,
-							fontSize: options? options.fontSize : undefined
-						}
-					},
-					highlighter: {
-						show: true
-					}
-				});
-			}
-
-			//
-			// GitHub plotting functions
-			//
-
-			function showhGitHubRepositories() {
+			function showGitHubRepositories(id, baseUrl) {
 				$.ajax({
-					url: 'https://datascience.sharedigm.com/open-source/public/api/github/repositories/num/year',
+					url: baseUrl + '/github/repositories/num/year',
 					type: 'GET',
 
 					// callbacks
@@ -100,55 +49,92 @@
 
 						// show chart
 						//
-						showBarChart('chart1', values, keys, {
+						showBarChart(id, values, keys, {
 							title: 'GitHub Repositories By Year',
-							color: '#5c6bc0', 
-							angle: -45
+							color: '#5c6bc0'
 						});
 					}
 				});	
 			}
 
-			function showhGitHubRepositoriesByLicense() {
+			function showGitHubRepositoriesByLicense(id, baseUrl) {
 				$.ajax({
-					url: 'https://datascience.sharedigm.com/open-source/public/api/github/repositories/licenses/counts',
+					url: baseUrl + '/github/repositories/licenses/counts',
 					type: 'GET',
 
 					// callbacks
 					//
 					success: (data) => {
 						let keys = Object.keys(data);
-						let values = getValues(data);
+						let values = getPercentages(data);
 
 						// show chart
 						//
-						showBarChart('chart2', values, keys, {
+						showBarChart(id, values, keys, {
 							title: 'GitHub Repositories By License',
-							color: '#5c6bc0', 
-							angle: -45
+							color: '#5c6bc0'
 						});
 					}
 				});	
 			}
 
-			function showhGitHubRepositoriesByLanguage() {
+			function showGitHubRepositoriesByLanguage(id, baseUrl) {
 				$.ajax({
-					url: 'https://datascience.sharedigm.com/open-source/public/api/github/repositories/languages/counts',
+					url: baseUrl + '/github/repositories/languages/counts',
 					type: 'GET',
 
 					// callbacks
 					//
 					success: (data) => {
 						let keys = Object.keys(data);
-						let values = getValues(data);
+						let values = getPercentages(data);
 
 						// show chart
 						//
-						showBarChart('chart3', values, keys, {
+						showBarChart(id, values, keys, {
 							title: 'GitHub Repositories By Language',
-							color: '#5c6bc0', 
-							angle: -45, 
-							fontSize: '10px'
+							color: '#5c6bc0'
+						});
+					}
+				});	
+			}
+
+			function showGitHubRepositoriesByFeatures(id, baseUrl) {
+				$.ajax({
+					url: baseUrl + '/github/repositories/counts',
+					type: 'GET',
+
+					// callbacks
+					//
+					success: (data) => {
+						let labels = getLabels(data);
+						let values = getValues(data);
+
+						// format labels
+						//
+						for (let i = 0; i < labels.length; i++) {
+							labels[i] = labels[i].replace(/Readme/g, 'README');
+							if (labels[i] != 'All') {
+								labels[i] = 'with ' + labels[i];
+							}
+						}
+
+						// convert to percent
+						//
+						let total = data['all'];
+						for (let i = 0; i < values.length; i++) {
+							values[i] = Math.round(values[i] / total * 100) + '%';
+						}
+
+						delete(labels[0]);
+						delete(values[0]);
+
+						// show chart
+						//
+						showBarChart(id, values, labels, {
+							title: 'GitHub Repositories By Features',
+							color: '#5c6bc0',
+							maxY: 100
 						});
 					}
 				});	
@@ -156,11 +142,17 @@
 
 			// start
 			//
-			$(document).ready(function() {
-				showhGitHubRepositories();
-				showhGitHubRepositoriesByLicense();
-				showhGitHubRepositoriesByLanguage();
-			});
+			window.onload = function() {
+				let server = 'https://datascience.sharedigm.com';
+				let baseUrl = server + '/open-source/public/api';
+				// let server = 'http://localhost';
+				// let baseUrl = server + '/open-source-server/public/api';
+
+				showGitHubRepositories('chart1', baseUrl);
+				showGitHubRepositoriesByLicense('chart2', baseUrl);
+				showGitHubRepositoriesByLanguage('chart3', baseUrl);
+				showGitHubRepositoriesByFeatures('chart4', baseUrl);
+			}
 		</script>
 	</body>
 </html>

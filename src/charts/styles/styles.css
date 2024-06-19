@@ -14,8 +14,16 @@ body {
 	text-align: center;
 }
 
-.chart {
-	width: 800px;
-	height: 400px;
-	margin: 50px auto;
+.charts {
+	text-align: center;
+
+	.chart {
+		display: inline-block;
+	}
+}
+
+.pie.chart {
+	width: 300px;
+	height: 300px;
+	margin: auto;
 }
