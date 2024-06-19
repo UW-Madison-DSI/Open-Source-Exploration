@@ -11,7 +11,7 @@ The following routes are used to query information about GitHub repositories.
 | GET | [/github/repositories](./github/repositories/get.md) | Get all GitHub repositories. |
 | GET | [/github/repositories/num](./github/repositories/get-num.md) | Get the number of GitHub repositories.  |
 | GET | [/github/repositories/num/year](./github/repositories/get-num-by-year.md) | Get the number of GitHub repositories per year.  |
-| GET | [/github/repositories/counts](./github/repositories/get-num-by-year.md) | Get the counts of GitHub repositories by feature.  |
+| GET | [/github/repositories/counts](./github/repositories/get-counts.md) | Get the counts of GitHub repositories by feature.  |
 | GET | [/github/repositories/{id}](./github/repositories/get-by-id.md) | Get information about a particular GitHub repository. |
 
 ### Language Querying Routes
@@ -45,7 +45,7 @@ The following routes are used to query information about GitLab projects.
 | GET | [/gitlab/projects](./gitlab/projects/get.md) | Get all GitLab projects. |
 | GET | [/gitlab/projects/num](./gitlab/projects/get-num.md) | Get the number of GitLab projects.  |
 | GET | [/gitlab/projects/num/year](./gitlab/projects/get-num-by-year.md) | Get the number of GitLab projects per year.  |
-| GET | [/gitlab/projects/counts](./github/projects/get-counts.md) | Get the counts of GitLab projects by feature.  |
+| GET | [/gitlab/projects/counts](./gitlab/projects/get-counts.md) | Get the counts of GitLab projects by feature.  |
 | GET | [/gitlab/projects/{id}](./gitlab/projects/get-by-id.md) | Get information about a particular GitLab project. |
 
 ### Language Querying Routes
