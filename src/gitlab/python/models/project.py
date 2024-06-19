@@ -61,6 +61,23 @@ class Project(Model):
 	# getting methods
 	#
 
+	def get_readme_url(self):
+
+		"""
+		Get the README.md url for this project.
+
+		Returns:
+			string
+		"""
+
+		# try main branch
+		#
+		if (self.has('readme_url')):
+			return self.base_url + '/' + str(self.get('id')) + '/repository/files/README.md/raw?ref=main'
+			# return self.get('readme_url').replace('/blob/', '/raw/') + '?inline=false'
+
+		return None
+
 	def get_readme(self):
 
 		"""
@@ -73,7 +90,7 @@ class Project(Model):
 		# try main branch
 		#
 		if (self.has('readme_url')):
-			request = requests.get(self.get('readme_url'))
+			request = requests.get(self.get_readme_url())
 			if (request.status_code == 200):
 				return request.text
 
