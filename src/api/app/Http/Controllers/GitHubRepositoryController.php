@@ -60,9 +60,17 @@ class GitHubRepositoryController extends Controller
 		// apply filters
 		//
 		$query = YearFilter::applyTo($request, $query);
-		$query = LimitFilter::applyTo($request, $query);
 		$query = LicenseFilter::applyTo($request, $query);
 		$query = LanguageFilter::applyTo($request, $query);
+		$query = ReadMeFilter::applyTo($request, $query);
+		$query = ReadMeImagesFilter::applyTo($request, $query);
+		$query = DescriptionFilter::applyTo($request, $query);
+		$query = HomepageFilter::applyTo($request, $query);
+		$query = StargazersFilter::applyTo($request, $query);
+		$query = WatchersFilter::applyTo($request, $query);
+		$query = ForksFilter::applyTo($request, $query);
+		$query = OpenIssuesFilter::applyTo($request, $query);
+		$query = LimitFilter::applyTo($request, $query);
 
 		// perform query
 		//

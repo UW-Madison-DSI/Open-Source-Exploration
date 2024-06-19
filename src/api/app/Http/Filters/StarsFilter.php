@@ -1,11 +1,11 @@
 <?php
 /******************************************************************************\
 |                                                                              |
-|                                ReadmeFilter.php                              |
+|                                StarsFilter.php                               |
 |                                                                              |
 |******************************************************************************|
 |                                                                              |
-|        This defines a utility for filtering by READMEs.                      |
+|        This defines a utility for filtering by stars.                        |
 |                                                                              |
 |        Author(s): Abe Megahed                                                |
 |                                                                              |
@@ -20,7 +20,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 
-class ReadmeFilter
+class StarsFilter
 {
 	/**
 	 * Apply filter to query.
@@ -33,16 +33,20 @@ class ReadmeFilter
 
 		// parse parameters
 		//
-		if ($request->has('readme')) {
+		if ($request->has('stars')) {
+			$stargazers = $request->input('stars');
 
 			// apply filter
 			//
-			switch ($request->input('readme')) {
+			switch ($stargazers) {
 				case 'true':
-					$query = $query->whereNotNull('readme_url');
+					$query = $query->where('star_count', '>', 0);
 					break;
 				case 'false':
-					$query = $query->whereNull('readme_url');
+					$query = $query->where('star_count', '=', 0);
+					break;
+				default:
+					$query = $query->where('star_count', '=', $stargazers);
 					break;
 			}
 		}

@@ -8,6 +8,13 @@ use App\Http\Filters\DateFilter;
 use App\Http\Filters\LimitFilter;
 use App\Http\Filters\LicenseFilter;
 use App\Http\Filters\LanguagesFilter;
+use App\Http\Filters\ReadMeFilter;
+use App\Http\Filters\ReadMeImagesFilter;
+use App\Http\Filters\DescriptionFilter;
+use App\Http\Filters\StarsFilter;
+use App\Http\Filters\WatchersFilter;
+use App\Http\Filters\ForksFilter;
+use App\Http\Filters\OpenIssuesFilter;
 
 class GitLabProjectController extends Controller
 {
@@ -52,9 +59,15 @@ class GitLabProjectController extends Controller
 		// apply filters
 		//
 		$query = DateFilter::applyTo($request, $query);
-		$query = LimitFilter::applyTo($request, $query);
 		$query = LicenseFilter::applyTo($request, $query);
 		$query = LanguagesFilter::applyTo($request, $query);
+		$query = ReadMeFilter::applyTo($request, $query);
+		$query = ReadMeImagesFilter::applyTo($request, $query);
+		$query = DescriptionFilter::applyTo($request, $query);
+		$query = StarsFilter::applyTo($request, $query);
+		$query = WatchersFilter::applyTo($request, $query);
+		$query = ForksFilter::applyTo($request, $query);
+		$query = LimitFilter::applyTo($request, $query);
 
 		// perform query
 		//
@@ -78,6 +91,12 @@ class GitLabProjectController extends Controller
 		$query = DateFilter::applyTo($request, $query);
 		$query = LicenseFilter::applyTo($request, $query);
 		$query = LanguagesFilter::applyTo($request, $query);
+		$query = ReadMeFilter::applyTo($request, $query);
+		$query = ReadMeImagesFilter::applyTo($request, $query);
+		$query = DescriptionFilter::applyTo($request, $query);
+		$query = StarsFilter::applyTo($request, $query);
+		$query = WatchersFilter::applyTo($request, $query);
+		$query = ForksFilter::applyTo($request, $query);
 
 		// perform query
 		//
