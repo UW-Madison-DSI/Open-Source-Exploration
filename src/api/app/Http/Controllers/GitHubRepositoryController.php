@@ -8,6 +8,14 @@ use App\Http\Filters\YearFilter;
 use App\Http\Filters\LimitFilter;
 use App\Http\Filters\LicenseFilter;
 use App\Http\Filters\LanguageFilter;
+use App\Http\Filters\ReadMeFilter;
+use App\Http\Filters\ReadMeImagesFilter;
+use App\Http\Filters\DescriptionFilter;
+use App\Http\Filters\HomepageFilter;
+use App\Http\Filters\StargazersFilter;
+use App\Http\Filters\WatchersFilter;
+use App\Http\Filters\ForksFilter;
+use App\Http\Filters\OpenIssuesFilter;
 
 class GitHubRepositoryController extends Controller
 {
@@ -78,9 +86,15 @@ class GitHubRepositoryController extends Controller
 		$query = YearFilter::applyTo($request, $query);
 		$query = LicenseFilter::applyTo($request, $query);
 		$query = LanguageFilter::applyTo($request, $query);
+		$query = ReadMeFilter::applyTo($request, $query);
+		$query = ReadMeImagesFilter::applyTo($request, $query);
+		$query = DescriptionFilter::applyTo($request, $query);
+		$query = HomepageFilter::applyTo($request, $query);
+		$query = StargazersFilter::applyTo($request, $query);
+		$query = WatchersFilter::applyTo($request, $query);
+		$query = ForksFilter::applyTo($request, $query);
+		$query = OpenIssuesFilter::applyTo($request, $query);
 
-		// perform query
-		//
 		return $query->count();
 	}
 
@@ -115,6 +129,29 @@ class GitHubRepositoryController extends Controller
 		}
 
 		return $nums;
+	}
+
+	/**
+	 * Get the repository metric counts.
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return integer
+	 */
+	public static function getCounts(Request $request) {
+		$query = GitHubRepository::query();
+
+		return [
+			'all' => $query->clone()->count(),
+			'descriptions' => $query->clone()->whereNotNull('description')->count(),
+			'readmes' => $query->clone()->where('readme_size', '!=', 0)->count(),
+			'readme_images' => $query->clone()->where('readme_has_images', '=', 1)->count(),
+			'licenses' => $query->clone()->whereNotNull('license_key')->count(),
+			'homepages' => $query->clone()->whereNotNull('homepage')->count(),
+			'stargazers' => $query->clone()->where('stargazers_count', '>', 0)->count(),
+			'watchers' => $query->clone()->where('watchers_count', '>', 0)->count(),
+			'forks' => $query->clone()->where('forks_count', '>', 0)->count(),
+			'open_issues' => $query->clone()->where('open_issues_count', '>', 0)->count(),
+		];
 	}
 
 	//
@@ -240,7 +277,10 @@ class GitHubRepositoryController extends Controller
 
 		// perform query
 		//
-		return $query->get()->pluck('license_key');
+		$licenses = $query->get()->pluck('license_key')->toArray();
+		sort($licenses);
+
+		return $licenses;
 	}
 
 	/**

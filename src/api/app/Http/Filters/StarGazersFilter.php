@@ -1,11 +1,11 @@
 <?php
 /******************************************************************************\
 |                                                                              |
-|                               LicenseFilter.php                              |
+|                             StarGazersFilter.php                             |
 |                                                                              |
 |******************************************************************************|
 |                                                                              |
-|        This defines a utility for filtering by license type.                 |
+|        This defines a utility for filtering by stargazers.                   |
 |                                                                              |
 |        Author(s): Abe Megahed                                                |
 |                                                                              |
@@ -20,7 +20,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 
-class LicenseFilter
+class StarGazersFilter
 {
 	/**
 	 * Apply filter to query.
@@ -33,20 +33,20 @@ class LicenseFilter
 
 		// parse parameters
 		//
-		if ($request->has('license')) {
-			$license = $request->input('license');
+		if ($request->has('stargazers')) {
+			$stargazers = $request->input('stargazers');
 
 			// apply filter
 			//
-			switch ($license) {
+			switch ($stargazers) {
 				case 'true':
-					$query = $query->whereNotNull('license_key');
+					$query = $query->where('stargazers_count', '>', 0);
 					break;
 				case 'false':
-					$query = $query->whereNull('license_key');
+					$query = $query->where('stargazers_count', '=', 0);
 					break;
 				default:
-					$query = $query->where('license_key', '=', $license);
+					$query = $query->where('stargazers_count', '=', $stargazers);
 					break;
 			}
 		}

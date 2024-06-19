@@ -99,8 +99,8 @@ class GitLabProjectController extends Controller
 
 			// create query
 			//
-			$query = GitLabProject::where('created_at', '>', strval($year))
-				->where('created_at', '<', strval($year + 1));
+			$query = GitLabProject::where('created_at', '>', strval($year) . '-01-01 00:00:00')
+				->where('created_at', '<', strval($year + 1) . '-01-01 00:00:00');
 
 			// apply filters
 			//
@@ -116,6 +116,28 @@ class GitLabProjectController extends Controller
 		}
 
 		return $nums;
+	}
+
+	/**
+	 * Get the repository metric counts.
+	 *
+	 * @param Illuminate\Http\Request $request - the Http request object
+	 * @return integer
+	 */
+	public static function getCounts(Request $request) {
+		$query = GitLabProject::query();
+
+		return [
+			'all' => $query->clone()->count(),
+			'descriptions' => $query->clone()->whereNotNull('description')->count(),
+			'readmes' => $query->clone()->whereNotNull('readme_url')->count(),
+			'readme_images' => $query->clone()->where('readme_has_images', '=', 1)->count(),
+			'licenses' => $query->clone()->whereNotNull('license_key')->count(),
+
+			'stars' => $query->clone()->where('star_count', '>', 0)->count(),
+			'forks' => $query->clone()->where('forks_count', '>', 0)->count(),
+			'open_issues' => $query->clone()->where('open_issues_count', '>', 0)->count(),
+		];
 	}
 
 	//
@@ -178,8 +200,7 @@ class GitLabProjectController extends Controller
 		$languages = self::getLanguages($request);
 
 		$counts = [];
-		for ($j = 0; $j < count($languages); $j++) {
-			$language = $languages[$j];
+		foreach ($languages as $language) {
 
 			// create query
 			//
@@ -215,13 +236,12 @@ class GitLabProjectController extends Controller
 		$years = [];
 		for ($year = $firstYear; $year <= $lastYear; $year++) {
 			$years[$year] = [];
-			for ($j = 0; $j < count($languages); $j++) {
-				$language = $languages[$j];
+			foreach ($languages as $language) {
 
 				// create query
 				//
-				$query = GitLabProject::where('created_at', '>', strval($year))
-					->where('created_at', '<', strval($year + 1))
+				$query = GitLabProject::where('created_at', '>', strval($year) . '-01-01 00:00:00')
+					->where('created_at', '<', strval($year + 1) . '-01-01 00:00:00')
 					->where('languages', 'like', $language . '%');
 
 				// apply filters
@@ -263,7 +283,10 @@ class GitLabProjectController extends Controller
 
 		// perform query
 		//
-		return $query->get()->pluck('license_key');
+		$licenses = $query->get()->pluck('license_key')->toArray();
+		sort($licenses);
+
+		return $licenses;
 	}
 
 	/**
@@ -274,10 +297,9 @@ class GitLabProjectController extends Controller
 	 */
 	public static function getLicenseCounts(Request $request) {
 		$licenses = self::getLicenses($request);
-
 		$counts = [];
-		for ($j = 0; $j < count($licenses); $j++) {
-			$license = $licenses[$j];
+
+		foreach ($licenses as $license) {
 
 			// create query
 			//
@@ -308,13 +330,12 @@ class GitLabProjectController extends Controller
 		$years = [];
 		for ($year = $firstYear; $year <= $lastYear; $year++) {
 			$years[$year] = [];
-			for ($j = 0; $j < count($licenses); $j++) {
-				$license = $licenses[$j];
+			foreach ($licenses as $license) {
 
 				// create query
 				//
-				$query = GitLabProject::where('created_at', '>', strval($year))
-					->where('created_at', '<', strval($year + 1))
+				$query = GitLabProject::where('created_at', '>', strval($year) . '-01-01 00:00:00')
+					->where('created_at', '<', strval($year + 1) . '-01-01 00:00:00')
 					->where('license_key', '=', $license);
 
 				// apply filters

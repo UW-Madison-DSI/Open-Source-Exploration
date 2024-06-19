@@ -1,11 +1,11 @@
 <?php
 /******************************************************************************\
 |                                                                              |
-|                               LicenseFilter.php                              |
+|                               HomepageFilter.php                             |
 |                                                                              |
 |******************************************************************************|
 |                                                                              |
-|        This defines a utility for filtering by license type.                 |
+|        This defines a utility for filtering by homepage.                     |
 |                                                                              |
 |        Author(s): Abe Megahed                                                |
 |                                                                              |
@@ -20,7 +20,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 
-class LicenseFilter
+class HomepageFilter
 {
 	/**
 	 * Apply filter to query.
@@ -33,20 +33,16 @@ class LicenseFilter
 
 		// parse parameters
 		//
-		if ($request->has('license')) {
-			$license = $request->input('license');
+		if ($request->has('homepage')) {
 
 			// apply filter
 			//
-			switch ($license) {
+			switch ($request->input('homepage')) {
 				case 'true':
-					$query = $query->whereNotNull('license_key');
+					$query = $query->whereNotNull('homepage');
 					break;
 				case 'false':
-					$query = $query->whereNull('license_key');
-					break;
-				default:
-					$query = $query->where('license_key', '=', $license);
+					$query = $query->whereNull('homepage');
 					break;
 			}
 		}

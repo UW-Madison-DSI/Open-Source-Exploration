@@ -1,11 +1,11 @@
 <?php
 /******************************************************************************\
 |                                                                              |
-|                               LicenseFilter.php                              |
+|                                ForksFilter.php                               |
 |                                                                              |
 |******************************************************************************|
 |                                                                              |
-|        This defines a utility for filtering by license type.                 |
+|        This defines a utility for filtering by forks.                        |
 |                                                                              |
 |        Author(s): Abe Megahed                                                |
 |                                                                              |
@@ -20,7 +20,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 
-class LicenseFilter
+class ForksFilter
 {
 	/**
 	 * Apply filter to query.
@@ -33,20 +33,20 @@ class LicenseFilter
 
 		// parse parameters
 		//
-		if ($request->has('license')) {
-			$license = $request->input('license');
+		if ($request->has('forks')) {
+			$forks =  $request->input('forks');
 
 			// apply filter
 			//
-			switch ($license) {
+			switch ($forks) {
 				case 'true':
-					$query = $query->whereNotNull('license_key');
+					$query = $query->where('forks_count', '>', 0);
 					break;
 				case 'false':
-					$query = $query->whereNull('license_key');
+					$query = $query->where('forks_count', '=', 0);
 					break;
 				default:
-					$query = $query->where('license_key', '=', $license);
+					$query = $query->where('forks_count', '=', $forks);
 					break;
 			}
 		}

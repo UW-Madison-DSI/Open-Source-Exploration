@@ -82,6 +82,9 @@ Route::get('/github/repositories/num', function (Request $request) {
 Route::get('/github/repositories/num/year', function (Request $request) {
     return GitHubRepositoryController::getNumByYear($request);
 });
+Route::get('/github/repositories/counts', function (Request $request) {
+    return GitHubRepositoryController::getCounts($request);
+});
 Route::get('/github/repositories/{id}', function (Request $request, string $id) {
     return GitHubRepositoryController::getIndex($request, $id);
 });
@@ -130,6 +133,9 @@ Route::get('/gitlab/projects/num', function (Request $request) {
 });
 Route::get('/gitlab/projects/num/year', function (Request $request) {
     return GitLabProjectController::getNumByYear($request);
+});
+Route::get('/gitlab/projects/counts', function (Request $request) {
+    return GitLabProjectController::getCounts($request);
 });
 Route::get('/gitlab/projects/{id}', function (Request $request, string $id) {
     return GitLabProjectController::getIndex($request, $id);

@@ -1,11 +1,11 @@
 <?php
 /******************************************************************************\
 |                                                                              |
-|                               LicenseFilter.php                              |
+|                            DescriptionFilter.php                             |
 |                                                                              |
 |******************************************************************************|
 |                                                                              |
-|        This defines a utility for filtering by license type.                 |
+|        This defines a utility for filtering by description.                  |
 |                                                                              |
 |        Author(s): Abe Megahed                                                |
 |                                                                              |
@@ -20,7 +20,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 
-class LicenseFilter
+class DescriptionFilter
 {
 	/**
 	 * Apply filter to query.
@@ -33,20 +33,16 @@ class LicenseFilter
 
 		// parse parameters
 		//
-		if ($request->has('license')) {
-			$license = $request->input('license');
+		if ($request->has('description')) {
 
 			// apply filter
 			//
-			switch ($license) {
+			switch ($request->input('description')) {
 				case 'true':
-					$query = $query->whereNotNull('license_key');
+					$query = $query->whereNotNull('description');
 					break;
 				case 'false':
-					$query = $query->whereNull('license_key');
-					break;
-				default:
-					$query = $query->where('license_key', '=', $license);
+					$query = $query->whereNull('description');
 					break;
 			}
 		}
