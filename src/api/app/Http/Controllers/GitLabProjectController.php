@@ -127,6 +127,10 @@ class GitLabProjectController extends Controller
 	public static function getCounts(Request $request) {
 		$query = GitLabProject::query();
 
+		// apply filters
+		//
+		$query = DateFilter::applyTo($request, $query);
+
 		return [
 			'all' => $query->clone()->count(),
 			'descriptions' => $query->clone()->whereNotNull('description')->count(),
