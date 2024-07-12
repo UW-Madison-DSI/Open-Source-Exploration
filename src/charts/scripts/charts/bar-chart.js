@@ -80,6 +80,7 @@ function addAlpha(color, opacity) {
 //
 
 function showBarChart(id, values, labels, options) {
+	element = document.getElementById(id);
 	let plot = Plotly.newPlot(id, [
 		{
 			x: labels,
@@ -112,7 +113,8 @@ function showBarChart(id, values, labels, options) {
 		yaxis: {
 			range: options && options.maxY? [0, options.maxY]: undefined,
 			ticksuffix: values[1].includes && values[1].includes('%')? '%' : undefined
-		}
+		},
+		width: element.parentNode.clientWidth
 	}, {
 		displayModeBar: false
 	});

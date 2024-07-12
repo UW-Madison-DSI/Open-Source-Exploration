@@ -1,0 +1,88 @@
+<!DOCTYPE html> 
+<html lang="en">
+	<head>
+		<!-- metadata -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<!-- system styles -->
+		<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.css" />
+
+		<!-- custom styles -->
+		<link rel="stylesheet" type="text/css" href="styles/styles.css" />
+
+		<!-- system scripts -->
+		<script type="text/javascript" src="library/jquery/jquery-3.6.0.js"></script>
+		<script type="text/javascript" src="library/plotly/plotly-2.32.0.min.js"></script>
+		<script type="text/javascript" src="vendor/bootstrap/js/tab.js"></script>
+
+		<!-- custom scripts -->
+		<script type="text/javascript" src="scripts/charts/bar-chart.js"></script>
+		<script type="text/javascript" src="scripts/github.js"></script>
+		<script type="text/javascript" src="scripts/gitlab.js"></script>
+	</head>
+
+	<body>
+		<form class="form-horizontal" style="margin:20px">
+			<ul class="nav nav-tabs" role="tablist">
+				
+				<li role="presentation" class="github-tab active">
+					<a role="tab" data-toggle="tab" href=".github.tab-pane">
+						<label>GitHub</label>
+					</a>
+				</li>
+				<li role="presentation" class="gitlab-tab">
+					<a role="tab" data-toggle="tab" href=".gitlab.tab-pane">
+						<label>GitLab</label>
+					</a>
+				</li>
+			</ul>
+
+			<div class="tab-content" style="margin-top:50px">
+				
+				<div role="tabpanel" class="github tab-pane active">
+					<div class="header">
+						<img class="logo" src="images/github-logo.svg">
+						<h1 class="title">GitHub Statistics</h1>
+					</div>
+					<div class="charts">
+						<div id="github1" class="chart"></div>
+						<div id="github2" class="chart"></div>
+						<div id="github3" class="chart"></div>
+						<div id="github4" class="chart"></div>
+					</div>
+				</div>
+				
+				<div role="tabpanel" class="gitlab tab-pane">
+					<div class="header">
+						<img class="logo" src="images/gitlab-logo.svg">
+						<h1 class="title">GitLab Statistics</h1>
+					</div>
+					<div class="charts">
+						<div id="gitlab1" class="chart"></div>
+						<div id="gitlab2" class="chart"></div>
+						<div id="gitlab3" class="chart"></div>
+						<div id="gitlab4" class="chart"></div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<script>
+			let server = 'https://datascience.sharedigm.com';
+			let baseUrl = server + '/open-source/public/api';
+			// let server = 'http://localhost';
+			// let baseUrl = server + '/open-source-server/public/api';
+
+			// start
+			//
+			window.onload = function() {
+				showGitHub(baseUrl);
+				showGitLab(baseUrl);
+			}
+		</script>
+	</body>
+</html>
