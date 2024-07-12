@@ -19,7 +19,6 @@ body {
 
 	.chart {
 		display: inline-block;
-		max-width: 100%;
 		overflow: auto;
 	}
 }

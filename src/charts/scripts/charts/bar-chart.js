@@ -67,6 +67,14 @@ function getPercentages(data) {
 	return values;
 }
 
+function getElementWidth(element) {
+	let width = element.clientWidth;
+	if (!width && element.parentNode) {
+		width = getElementWidth(element.parentNode);
+	}
+	return width;
+}
+
 function addAlpha(color, opacity) {
 
 	// add alpha opacity to hex color
@@ -80,7 +88,7 @@ function addAlpha(color, opacity) {
 //
 
 function showBarChart(id, values, labels, options) {
-	element = document.getElementById(id);
+	let element = document.getElementById(id);
 	let plot = Plotly.newPlot(id, [
 		{
 			x: labels,
@@ -114,7 +122,7 @@ function showBarChart(id, values, labels, options) {
 			range: options && options.maxY? [0, options.maxY]: undefined,
 			ticksuffix: values[1].includes && values[1].includes('%')? '%' : undefined
 		},
-		width: element.parentNode.clientWidth
+		width: getElementWidth(element)
 	}, {
 		displayModeBar: false
 	});
